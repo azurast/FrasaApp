@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    // HOME
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.labill.frasaapp.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home">
+
+        <action
+            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
+            app:destination="@id/nav_home_second" />
+    </fragment>
+
+    // HOME SECOND (MASIH GATAU BUAT APA)
+    <fragment
+        android:id="@+id/nav_home_second"
+        android:name="com.labill.frasaapp.ui.home.HomeSecondFragment"
+        android:label="@string/home_second"
+        tools:layout="@layout/fragment_home_second">
+        <action
+            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
+            app:destination="@id/nav_home" />
+
+        <argument
+            android:name="myArg"
+            app:argType="string" />
+    </fragment>
+
+    // BOOKMARKS
+    <fragment
+        android:id="@+id/nav_bookmarks"
+        android:name="com.labill.frasaapp.ui.bookmarks.BookmarksFragment"
+        android:label="@string/menu_bookmarks"
+        tools:layout="@layout/fragment_bookmarks" />
+
+    // WRITE
+    <fragment
+        android:id="@+id/nav_write"
+        android:name="com.labill.frasaapp.ui.write.WriteFragment"
+        android:label="@string/menu_write"
+        tools:layout="@layout/fragment_write" />
+
+    // DRAFTS
+    <fragment
+        android:id="@+id/nav_drafts"
+        android:name="com.labill.frasaapp.ui.drafts.DraftsFragment"
+        android:label="@string/menu_drafts"
+        tools:layout="@layout/fragment_drafts" />
+
+    // MY WRITINGS
+    <fragment
+        android:id="@+id/nav_my_writings"
+        android:name="com.labill.frasaapp.ui.mywritings.MyWritingsFragment"
+        android:label="@string/menu_my_writings"
+        tools:layout="@layout/fragment_my_writings"/>
+
+    // ABOUT THE APP
+    <fragment
+        android:id="@+id/nav_about"
+        android:name="com.labill.frasaapp.ui.about.AboutFragment"
+        android:label="@string/menu_about"
+        tools:layout="@layout/fragment_about"/>
+</navigation>
