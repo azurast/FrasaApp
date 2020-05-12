@@ -18,6 +18,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -58,10 +59,11 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (username.equals("")){
                     Toast.makeText(LoginActivity.this, "Email can't be empty", Toast.LENGTH_SHORT).show();
+                    etUsername.requestFocus();
 
                 } else if (password.equals("")){
                     Toast.makeText(LoginActivity.this, "Password can't be empty", Toast.LENGTH_SHORT).show();
-
+                    etPassword.requestFocus();
                 }
 
                 else {
@@ -76,6 +78,8 @@ public class LoginActivity extends AppCompatActivity {
 
                                         Toast.makeText(LoginActivity.this, "Authentication Success",
                                                 Toast.LENGTH_SHORT).show();
+
+                                        updateUI(user);
 
 
                                     }
@@ -103,6 +107,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
 
+    }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent home = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(home);
+            finish();
+        }
     }
 }

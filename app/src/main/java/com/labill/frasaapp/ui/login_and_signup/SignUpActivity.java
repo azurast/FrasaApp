@@ -13,15 +13,23 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.ProviderQueryResult;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
+import com.labill.frasaapp.database.constructorClass.User;
+import com.labill.frasaapp.ui.home.HomeFragment;
 
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private DatabaseReference database;
     private String name, email, password, conpassword;
     private TextView boxname, boxemail, boxpassword, boxconpassword;
     private ImageButton signup;
@@ -38,6 +46,14 @@ public class SignUpActivity extends AppCompatActivity {
         boxconpassword = findViewById(R.id.password2);
         signup = findViewById(R.id.signup);
         toLogin = findViewById(R.id.move2);
+
+        final String bio = "Hello, enjoy my stories";
+        final String follow = null;
+        final String bookmark = null;
+        final String photo = null;
+
+        database = FirebaseDatabase.getInstance().getReference();
+
         final ImageView loadingProgressBar = findViewById(R.id.loading);
 
         // Initialize Firebase Auth
@@ -66,43 +82,89 @@ public class SignUpActivity extends AppCompatActivity {
                 if (email.equals("") || password.equals("") || conpassword.equals("") || name.equals("")) {
                     Toast.makeText(SignUpActivity.this, "Please fill up all fields ",
                             Toast.LENGTH_SHORT).show();
-                }
+                    if(name.equals(""))
+                    {
+                        boxname.requestFocus();
+                    }
+                    else if(email.equals(""))
+                    {
+                        boxemail.requestFocus();
+                    }
+                    else if(password.equals(""))
+                    {
+                        boxpassword.requestFocus();
+                    }
+                    else if(conpassword.equals(""))
+                    {
+                        boxconpassword.requestFocus();
+                    }
 
-                else if (!conpassword.equals(password)) {
-                    Toast.makeText(SignUpActivity.this, "Password not matching",
-                            Toast.LENGTH_SHORT).show();
                 }
 
                 else {
+                    mAuth.fetchProvidersForEmail(email).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<ProviderQueryResult> task) {
+                            if (task.isSuccessful()) {
+                                if (password.length() < 6) {
+                                    Toast.makeText(SignUpActivity.this, "Password must at least 6 characters",
+                                            Toast.LENGTH_SHORT).show();
+                                    boxpassword.requestFocus();
+                                } else if (!conpassword.equals(password)) {
+                                    Toast.makeText(SignUpActivity.this, "Password not matching",
+                                            Toast.LENGTH_SHORT).show();
+                                    boxconpassword.requestFocus();
+                                } else {
 
-                    mAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        // Sign in success, update UI with the signed-in user's information
-                                        FirebaseUser user = mAuth.getCurrentUser();
+                                    mAuth.createUserWithEmailAndPassword(email, password)
+                                            .addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                                    if (task.isSuccessful()) {
+                                                        // Sign in success, update UI with the signed-in user's information
+                                                        FirebaseUser user = mAuth.getCurrentUser();
 
-                                        Toast.makeText(SignUpActivity.this, "Authentication success.",
-                                                Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(SignUpActivity.this, "Authentication success.",
+                                                                Toast.LENGTH_SHORT).show();
 
-                                    }
+                                                        submitUser(new User(name, email, bio, photo,
+                                                                follow, bookmark));
 
-                                    else {
-                                        // If sign in fails, display a message to the user.
-                                        Toast.makeText(SignUpActivity.this, "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
+                                                        updateUI(user);
 
-                                    }
+                                                    } else {
+                                                        // If sign in fails, display a message to the user.
+                                                        Toast.makeText(SignUpActivity.this, "Email already registered or not valid",
+                                                                Toast.LENGTH_SHORT).show();
 
+                                                    }
+
+                                                }
+                                            });
                                 }
-                            });
+                            }
+                        }
+                    });
                 }
+
 
             }
         });
 
 
+    }
+
+    private void submitUser(User user) {
+        database.child("User")
+                .push()
+                .setValue(user)
+                .addOnSuccessListener(this, new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        boxname.setText("");
+                        boxemail.setText("");
+                    }
+                });
     }
 
     @Override
@@ -117,5 +179,15 @@ public class SignUpActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
     }
+
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            Intent home = new Intent(SignUpActivity.this, MainActivity.class);
+            startActivity(home);
+            finish();
+        }
+    }
+
 }
