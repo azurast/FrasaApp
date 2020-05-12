@@ -6,64 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".ui.reading_mode.ReadingActivity">
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginBottom="1dp"
-        android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/scReadingSpace"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:srcCompat="@tools:sample/backgrounds/scenic"
-        android:contentDescription="postImageHeader" />
 
-    <ScrollView
-        android:id="@+id/scReadingSpace"
-        android:layout_width="409dp"
-        android:layout_height="0dp"
-        android:layout_marginBottom="1dp"
+    <FrameLayout
+        android:id="@+id/content_fragment"
+        android:layout_width="350dp"
+        android:layout_height="665dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/tvPostTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="Sample Title"
-                android:textAllCaps="false"
-                android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvPostAuthor"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:text="by John Doe"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/tvPostContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Lorem ipsum dolor sit amet."
-                android:textColor="@color/colorAccent"
-                android:textSize="16sp" />
-        </LinearLayout>
-    </ScrollView>
-
-
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
