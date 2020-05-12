@@ -1,6 +1,5 @@
 package com.labill.frasaapp.ui.login_and_signup;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -204,5 +203,3 @@ public class SignUpActivity extends AppCompatActivity {
             finish();
         }
     }
-
-}
