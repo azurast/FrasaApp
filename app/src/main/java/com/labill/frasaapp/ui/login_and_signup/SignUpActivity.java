@@ -21,10 +21,15 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.ProviderQueryResult;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.database.constructorClass.User;
 import com.labill.frasaapp.ui.home.HomeFragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -34,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
     private TextView boxname, boxemail, boxpassword, boxconpassword;
     private ImageButton signup;
     private TextView toLogin;
+    FirebaseFirestore db;
+    String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +54,7 @@ public class SignUpActivity extends AppCompatActivity {
         signup = findViewById(R.id.signup);
         toLogin = findViewById(R.id.move2);
 
-        final String bio = "Hello, enjoy my stories";
-        final String follow = null;
-        final String bookmark = null;
-        final String photo = null;
-
-        database = FirebaseDatabase.getInstance().getReference();
+        db = FirebaseFirestore.getInstance();
 
         final ImageView loadingProgressBar = findViewById(R.id.loading);
 
@@ -127,8 +129,21 @@ public class SignUpActivity extends AppCompatActivity {
                                                         Toast.makeText(SignUpActivity.this, "Authentication success.",
                                                                 Toast.LENGTH_SHORT).show();
 
-                                                        submitUser(new User(name, email, bio, photo,
-                                                                follow, bookmark));
+                                                        id = mAuth.getCurrentUser().getUid();
+                                                        DocumentReference documentReference = db.collection("users").document(id);
+                                                        Map<String, Object> newuser = new HashMap<>();
+                                                        newuser.put("name", name);
+                                                        newuser.put("email", email);
+                                                        newuser.put("bio", "Hello, enjoy my stories");
+                                                        newuser.put("follow", null);
+                                                        newuser.put("bookmark", null);
+                                                        newuser.put("photo", null);
+                                                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                Log.d("l", "addded");
+                                                            }
+                                                        });
 
                                                         updateUI(user);
 
