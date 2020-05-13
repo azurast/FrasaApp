@@ -1,5 +1,6 @@
 package com.labill.frasaapp;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -13,9 +14,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.labill.frasaapp.ui.home.HomeFragment;
 import com.labill.frasaapp.ui.profile.Profile2Activity;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.ListFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -51,6 +56,11 @@ public class MainActivity extends AppCompatActivity {
         //DatabaseReference myRef = database.getReference("message");
 
         //myRef.setValue("Hello, World!");
+
+        //Home List Stories
+        HomeFragment homeFragment = new HomeFragment();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.drawer_layout, homeFragment).commit();
     }
 
 
