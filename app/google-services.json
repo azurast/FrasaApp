@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "689424737533",
+    "firebase_url": "https://frasaapp.firebaseio.com",
+    "project_id": "frasaapp",
+    "storage_bucket": "frasaapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:689424737533:android:3de6b1de23b236296fca94",
+        "android_client_info": {
+          "package_name": "com.labill.frasaapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "689424737533-brfqh707ok02520v393vjgdkot6kc5ai.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.labill.frasaapp",
+            "certificate_hash": "d7658358cc4a7ec7fa4651715d594bc7a394d118"
+          }
+        },
+        {
+          "client_id": "689424737533-0r3bdtch17ica7dnacp1unp62fnmu6df.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBTWi2RIeEf6cALpNGisN8SR3-W6P3pLpg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "689424737533-0r3bdtch17ica7dnacp1unp62fnmu6df.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -17,20 +17,20 @@
             app:destination="@id/nav_home_second" />
     </fragment>
 
-    // HOME SECOND (MASIH GATAU BUAT APA)
-    <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.labill.frasaapp.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
+<!--    // HOME SECOND (MASIH GATAU BUAT APA)-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_home_second"-->
+<!--        android:name="com.labill.frasaapp.ui.home.HomeSecondFragment"-->
+<!--        android:label="@string/home_second"-->
+<!--        tools:layout="@layout/fragment_home_second">-->
+<!--        <action-->
+<!--            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"-->
+<!--            app:destination="@id/nav_home" />-->
 
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
+<!--        <argument-->
+<!--            android:name="myArg"-->
+<!--            app:argType="string" />-->
+<!--    </fragment>-->
 
     // BOOKMARKS
     <fragment
@@ -66,4 +66,5 @@
         android:name="com.labill.frasaapp.ui.about.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about"/>
+
 </navigation>

@@ -1,5 +1,7 @@
 package com.labill.frasaapp.database.constructorClass;
 
+import android.widget.ImageView;
+
 import java.io.Serializable;
 
 public class User implements Serializable {
@@ -16,6 +18,11 @@ public class User implements Serializable {
         this.photo = photo;
         this.follow = follow;
         this.bookmark = bookmark;
+    }
+
+    public User(String name, String photo){
+        this.name = name;
+        this.photo = photo;
     }
 
     public String getName()
