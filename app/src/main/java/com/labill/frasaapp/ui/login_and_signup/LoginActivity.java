@@ -1,8 +1,21 @@
 package com.labill.frasaapp.ui.login_and_signup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -14,16 +27,24 @@ import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
 
 public class LoginActivity extends AppCompatActivity {
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    private EditText etUsername, etPassword;
+    private TextView regist;
+    private ImageButton login;
+    private CheckBox remember;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
+    private Boolean checked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-
         etUsername = findViewById(R.id.email);
         etPassword = findViewById(R.id.password);
-
+        remember = findViewById(R.id.remember);
         regist = findViewById(R.id.move2);
 
         regist.setOnClickListener(new View.OnClickListener() {
@@ -38,12 +59,40 @@ public class LoginActivity extends AppCompatActivity {
 
         login = findViewById(R.id.login);
 
+        preferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+        editor = preferences.edit();
+
+        checked = preferences.getBoolean("saveLogin", false);
+
+        if(checked == true)
+        {
+            etUsername.setText(preferences.getString("email", ""));
+            etPassword.setText(preferences.getString("password", ""));
+            remember.setChecked(true);
+        }
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(etUsername.getWindowToken(), 0);
+
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
+
+                if (remember.isChecked()) {
+                    editor.putBoolean("saveLogin", true);
+                    editor.putString("email", username);
+                    editor.putString("password", password);
+                    editor.commit();
+                }
+
+                else {
+                    editor.clear();
+                    editor.commit();
+                }
+
 
                 if (username.equals("")){
                     Toast.makeText(LoginActivity.this, "Email can't be empty", Toast.LENGTH_SHORT).show();
@@ -84,6 +133,19 @@ public class LoginActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+        remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener(){
+
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    SharedPreferences preferences = getSharedPreferences("checkbox", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putString("remember", "true");
+                    editor.apply();
+                }
             }
         });
 
