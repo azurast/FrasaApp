@@ -29,6 +29,7 @@
     <group
         android:id="@+id/group_three"
         android:checkableBehavior="single">
+
         <item
             android:id="@+id/nav_settings"
             android:orderInCategory="100"

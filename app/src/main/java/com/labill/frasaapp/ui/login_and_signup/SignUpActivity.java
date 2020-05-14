@@ -84,26 +84,17 @@ public class SignUpActivity extends AppCompatActivity {
                 if (email.equals("") || password.equals("") || conpassword.equals("") || name.equals("")) {
                     Toast.makeText(SignUpActivity.this, "Please fill up all fields ",
                             Toast.LENGTH_SHORT).show();
-                    if(name.equals(""))
-                    {
+                    if (name.equals("")) {
                         boxname.requestFocus();
-                    }
-                    else if(email.equals(""))
-                    {
+                    } else if (email.equals("")) {
                         boxemail.requestFocus();
-                    }
-                    else if(password.equals(""))
-                    {
+                    } else if (password.equals("")) {
                         boxpassword.requestFocus();
-                    }
-                    else if(conpassword.equals(""))
-                    {
+                    } else if (conpassword.equals("")) {
                         boxconpassword.requestFocus();
                     }
 
-                }
-
-                else {
+                } else {
                     mAuth.fetchProvidersForEmail(email).addOnCompleteListener(new OnCompleteListener<ProviderQueryResult>() {
                         @Override
                         public void onComplete(@NonNull Task<ProviderQueryResult> task) {
@@ -204,5 +195,4 @@ public class SignUpActivity extends AppCompatActivity {
             finish();
         }
     }
-
 }

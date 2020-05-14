@@ -17,20 +17,20 @@
             app:destination="@id/nav_home_second" />
     </fragment>
 
-    // HOME SECOND (MASIH GATAU BUAT APA)
-    <fragment
-        android:id="@+id/nav_home_second"
-        android:name="com.labill.frasaapp.ui.home.HomeSecondFragment"
-        android:label="@string/home_second"
-        tools:layout="@layout/fragment_home_second">
-        <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
-            app:destination="@id/nav_home" />
+<!--    // HOME SECOND (MASIH GATAU BUAT APA)-->
+<!--    <fragment-->
+<!--        android:id="@+id/nav_home_second"-->
+<!--        android:name="com.labill.frasaapp.ui.home.HomeSecondFragment"-->
+<!--        android:label="@string/home_second"-->
+<!--        tools:layout="@layout/fragment_home_second">-->
+<!--        <action-->
+<!--            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"-->
+<!--            app:destination="@id/nav_home" />-->
 
-        <argument
-            android:name="myArg"
-            app:argType="string" />
-    </fragment>
+<!--        <argument-->
+<!--            android:name="myArg"-->
+<!--            app:argType="string" />-->
+<!--    </fragment>-->
 
     // BOOKMARKS
     <fragment
@@ -53,6 +53,13 @@
         android:label="@string/menu_drafts"
         tools:layout="@layout/fragment_drafts" />
 
+    // MY WRITINGS
+    <fragment
+        android:id="@+id/nav_my_writings"
+        android:name="com.labill.frasaapp.ui.mywritings.MyWritingsFragment"
+        android:label="@string/menu_my_writings"
+        tools:layout="@layout/fragment_my_writings"/>
+
     // ABOUT THE APP
     <fragment
         android:id="@+id/nav_about"
@@ -60,10 +67,4 @@
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about"/>
 
-    // SETTING
-    <fragment
-        android:id="@+id/nav_settings"
-        android:name="com.labill.frasaapp.ui.setting.SettingFragment"
-        android:label="Setting"
-        tools:layout="@layout/fragment_setting"/>
 </navigation>
