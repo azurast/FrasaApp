@@ -12,9 +12,9 @@
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
-        <action
-            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"
-            app:destination="@id/nav_home_second" />
+<!--        <action-->
+<!--            android:id="@+id/action_HomeFragment_to_HomeSecondFragment"-->
+<!--            app:destination="@id/nav_home_second" />-->
     </fragment>
 
 <!--    // HOME SECOND (MASIH GATAU BUAT APA)-->
@@ -54,11 +54,6 @@
         tools:layout="@layout/fragment_drafts" />
 
     // MY WRITINGS
-    <fragment
-        android:id="@+id/nav_my_writings"
-        android:name="com.labill.frasaapp.ui.mywritings.MyWritingsFragment"
-        android:label="@string/menu_my_writings"
-        tools:layout="@layout/fragment_my_writings"/>
 
     // ABOUT THE APP
     <fragment
