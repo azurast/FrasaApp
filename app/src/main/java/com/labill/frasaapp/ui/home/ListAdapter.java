@@ -75,7 +75,6 @@ public class ListAdapter extends RecyclerView.Adapter {
             numOfLikes = (TextView) itemView.findViewById(R.id.number_of_likes);
             btnBookmark = (Button) itemView.findViewById(R.id.btn_bookmark);
             btnLike = (Button) itemView.findViewById(R.id.btn_like);
-
             itemView.setOnClickListener(this);
         }
 

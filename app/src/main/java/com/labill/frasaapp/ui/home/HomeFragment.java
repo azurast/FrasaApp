@@ -50,7 +50,16 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+    }
+
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+
+        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
         storiesList = new ArrayList<>();
+        mainList = (RecyclerView) view.findViewById(R.id.rvPost);
+        listAdapter = new ListAdapter(storiesList);
         //listAdapter = new ListAdapter(storiesList);
         //mainList = (RecyclerView) mainList.findViewById(R.id.rvPost);
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -67,10 +76,10 @@ public class HomeFragment extends Fragment {
                     Log.d(TAG, "doc.getType :"+doc.getType());
                     if(doc.getType() == DocumentChange.Type.ADDED){
                         /* IMPORTANT!
-                        * to be able to retrieve the data,
-                        * the attribute names in class Stories
-                        * must match the ones in the database
-                        * */
+                         * to be able to retrieve the data,
+                         * the attribute names in class Stories
+                         * must match the ones in the database
+                         * */
                         String storyId = doc.getDocument().getId();
                         Stories stories = doc.getDocument().toObject(Stories.class);
                         Log.d(TAG, "stories : "+stories);
@@ -80,21 +89,13 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-    }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        mainList = (RecyclerView) view.findViewById(R.id.rvPost);
-        listAdapter = new ListAdapter(storiesList);
-        mainList.setAdapter(listAdapter);
-
-        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         mainList.setLayoutManager(layoutManager);
+        mainList.setAdapter(listAdapter);
 
         return view;
+        //return null;
     }
 }

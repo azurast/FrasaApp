@@ -99,9 +99,9 @@ public class MainActivity extends AppCompatActivity {
         //myRef.setValue("Hello, World!");
 
         //Home List Stories
-        HomeFragment homeFragment = new HomeFragment();
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().add(R.id.drawer_layout, homeFragment).commit();
+//        HomeFragment homeFragment = new HomeFragment();
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().add(R.id.drawer_layout, homeFragment).commit();
     }
 
     @Override
