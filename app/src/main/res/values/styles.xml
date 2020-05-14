@@ -25,4 +25,32 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">#817777</item>
     </style>
+
+    <!-- Style Start Writing-->
+    <style name="next">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">#BF6634</item>
+    </style>
+    <style name="title1">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">#BF6634</item>
+    </style>
+    <style name="pick_catego">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">#BF6634</item>
+    </style>
+    <style name="choose_layo">
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">#BF6634</item>
+    </style>
+    <style name="start_writi">
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">#817777</item>
+    </style>
+
 </resources>
+
