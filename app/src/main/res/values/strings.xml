@@ -44,6 +44,6 @@
     <string name="preview">Preview</string>
     <string name="pick_catego">Pick Category</string>
     <string name="pick_genre">Pick Genre</string>
-    <string name="following">Following</string>
+    <string name="action_signout">Sign Out</string>
 
 </resources>
