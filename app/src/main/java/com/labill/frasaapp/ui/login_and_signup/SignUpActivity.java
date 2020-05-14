@@ -77,7 +77,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 name = boxname.getText().toString();
-                email = boxemail.getText().toString();
+                email = boxemail.getText().toString().trim();
                 password = boxpassword.getText().toString();
                 conpassword = boxconpassword.getText().toString();
 
@@ -128,8 +128,8 @@ public class SignUpActivity extends AppCompatActivity {
                                                         newuser.put("bio", "Hello, enjoy my stories");
                                                         newuser.put("follow", null);
                                                         newuser.put("bookmark", null);
-                                                        newuser.put("photo", null);
-                                                        documentReference.set(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        newuser.put("photo", "user.jpg");
+                                                        documentReference.set(newuser).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
                                                             public void onSuccess(Void aVoid) {
                                                                 Log.d("l", "addded");
