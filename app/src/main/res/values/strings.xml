@@ -17,6 +17,7 @@
     <string name="menu_drafts">Drafts</string>
     <string name="menu_my_writings">My Writings</string>
     <string name="menu_about">About the App</string>
+    <string name="menu_setting">Setting</string>
     <string name="menu_bookmarks">Bookmarks</string>
     <string name="user_name">John Doe</string>
     <string name="menu_profile">Profile</string>
@@ -24,6 +25,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_signup">Sign up</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>

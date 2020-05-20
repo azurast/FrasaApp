@@ -118,15 +118,12 @@ public class SettingFragment extends Fragment {
                 Picasso.get().load(uri).into(pp);
             }
         });
-/*
+
         save.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 FirebaseUser user = mAuth.getCurrentUser();
-
-                Toast.makeText(SignUpActivity.this, "Authentication success.",
-                        Toast.LENGTH_SHORT).show();
 
 
                 user.update("name", name);
@@ -143,7 +140,7 @@ public class SettingFragment extends Fragment {
                 });
             }
         });
-*/
+
     }
 
     @Override
