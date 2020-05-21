@@ -161,7 +161,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void submitUser(User user) {
-        database.child("User")
+        database.child("com.labill.frasaapp.User")
                 .push()
                 .setValue(user)
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {

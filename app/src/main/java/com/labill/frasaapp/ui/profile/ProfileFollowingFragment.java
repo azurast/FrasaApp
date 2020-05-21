@@ -38,10 +38,10 @@ public class ProfileFollowingFragment extends Fragment {
         String[] followings = {"Azura", "Cyntia", "Aaron"};
 
         // Test pake class user
-//        User user1 = new User("Azura", "photo");
-//        User user2 = new User("Cyntia", "photo");
-//        User user3= new User("Aaron", "photo");
-//        ArrayList<User> following_list = new ArrayList<User>();
+//        com.labill.frasaapp.User user1 = new com.labill.frasaapp.User("Azura", "photo");
+//        com.labill.frasaapp.User user2 = new com.labill.frasaapp.User("Cyntia", "photo");
+//        com.labill.frasaapp.User user3= new com.labill.frasaapp.User("Aaron", "photo");
+//        ArrayList<com.labill.frasaapp.User> following_list = new ArrayList<com.labill.frasaapp.User>();
 //        following_list.add(user1);
 //        following_list.add(user2);
 //        following_list.add(user3);
