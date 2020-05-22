@@ -16,33 +16,18 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.Stories;
-import com.labill.frasaapp.User;
-import com.labill.frasaapp.ui.home.ListAdapter;
+import com.labill.frasaapp.StoriesListAdapter;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileStoriesFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileStoriesFragment extends Fragment {
 
     // For checking logs regarded firebase
@@ -54,7 +39,7 @@ public class ProfileStoriesFragment extends Fragment {
     private FirebaseUser currentUser;
     private List<Stories> storiesList;
     private RecyclerView recyclerView;
-    private ListAdapter ListAdapter;
+    private StoriesListAdapter storiesListAdapter;
     private String userName;
     
     public static ProfileStoriesFragment newInstance(String param1, String param2) {
@@ -69,10 +54,8 @@ public class ProfileStoriesFragment extends Fragment {
 
     }
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // The view we want to pass the data on
         View view = inflater.inflate(R.layout.fragment_profile_stories, container, false);
         // Array of user's stories
@@ -80,7 +63,7 @@ public class ProfileStoriesFragment extends Fragment {
         // Get Recycler View
         recyclerView = (RecyclerView) view.findViewById(R.id.rvPost);
         // Get List Adapter to hold our data
-        ListAdapter = new ListAdapter(storiesList);
+        storiesListAdapter = new StoriesListAdapter(storiesList);
 
         // Get instance of firebase
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -91,7 +74,7 @@ public class ProfileStoriesFragment extends Fragment {
 
         // Buat Akses Data user, in this case username
         //Log.d(TAG, "CurrentUserId : "+ currentUserId.toString());
-        DocumentReference documentReference = firebaseFirestore.collection("users").document(currentUserId.toString());
+        final DocumentReference documentReference = firebaseFirestore.collection("users").document(currentUserId.toString());
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -115,9 +98,10 @@ public class ProfileStoriesFragment extends Fragment {
                 if(task.isSuccessful()){
                     Log.d(TAG, "Task Successfull");
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        Log.d(TAG, "document id :"+documentSnapshot.getId());
                         Stories story = documentSnapshot.toObject(Stories.class);
                         storiesList.add(story);
-                        ListAdapter.notifyDataSetChanged();
+                        storiesListAdapter.notifyDataSetChanged();
                         Log.d(TAG, "Query returns : "+documentSnapshot.getData());
                     }
                 }else{
@@ -130,7 +114,7 @@ public class ProfileStoriesFragment extends Fragment {
         final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(ListAdapter);
+        recyclerView.setAdapter(storiesListAdapter);
 
         // Inflate the layout for this fragment
         return view;
