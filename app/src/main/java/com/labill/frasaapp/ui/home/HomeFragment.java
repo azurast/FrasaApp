@@ -5,33 +5,25 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.Stories;
-import com.labill.frasaapp.database.constructorClass.User;
+import com.labill.frasaapp.StoriesListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class HomeFragment extends Fragment {
 
@@ -43,7 +35,7 @@ public class HomeFragment extends Fragment {
     // Firebase & List Adapter
     private FirebaseFirestore firebaseFirestore;
     private RecyclerView mainList;
-    private ListAdapter listAdapter;
+    private StoriesListAdapter storiesListAdapter;
     private List<Stories> storiesList;
 
     @Override
@@ -52,17 +44,15 @@ public class HomeFragment extends Fragment {
 
     }
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
+        //homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         storiesList = new ArrayList<>();
         mainList = (RecyclerView) view.findViewById(R.id.rvPost);
-        listAdapter = new ListAdapter(storiesList);
-        //listAdapter = new ListAdapter(storiesList);
-        //mainList = (RecyclerView) mainList.findViewById(R.id.rvPost);
+        storiesListAdapter = new StoriesListAdapter(storiesList);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        Log.d(TAG, "Recycler View Main List: "+mainList);
 
         firebaseFirestore.collection("stories").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -84,7 +74,7 @@ public class HomeFragment extends Fragment {
                         Stories stories = doc.getDocument().toObject(Stories.class);
                         Log.d(TAG, "stories : "+stories);
                         storiesList.add(stories);
-                        listAdapter.notifyDataSetChanged();
+                        storiesListAdapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -93,7 +83,7 @@ public class HomeFragment extends Fragment {
         final RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getBaseContext());
         ((LinearLayoutManager) layoutManager).setOrientation(LinearLayoutManager.VERTICAL);
         mainList.setLayoutManager(layoutManager);
-        mainList.setAdapter(listAdapter);
+        mainList.setAdapter(storiesListAdapter);
 
         return view;
         //return null;

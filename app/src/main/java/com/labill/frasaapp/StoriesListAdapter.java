@@ -1,4 +1,4 @@
-package com.labill.frasaapp.ui.home;
+package com.labill.frasaapp;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,30 +18,15 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ListAdapter extends RecyclerView.Adapter {
+public class StoriesListAdapter extends RecyclerView.Adapter {
 
     public List<Stories> storiesList;
 
-    public ListAdapter(List<Stories> storiesList) {
+    public StoriesListAdapter(List<Stories> storiesList) {
         this.storiesList = storiesList;
     }
 
-//    @Override
-//    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
-//        return new ViewHolder(view);
-//    }
-//
-//    @Override
-//    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-//        holder.userName.setText(storiesList.get(position).getAuthor());
-//    }
-//
-//    @Override
-//    public int getItemCount() {
-//        return storiesList.size();
-//    }
-
+    @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
