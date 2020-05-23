@@ -41,7 +41,7 @@ public class ProfileStoriesFragment extends Fragment {
     private RecyclerView recyclerView;
     private StoriesListAdapter storiesListAdapter;
     private String userName;
-    
+
     public static ProfileStoriesFragment newInstance(String param1, String param2) {
         ProfileStoriesFragment fragment = new ProfileStoriesFragment();
         Bundle args = new Bundle();
