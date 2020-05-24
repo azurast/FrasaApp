@@ -1,5 +1,6 @@
 package com.labill.frasaapp;
 
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,15 +12,30 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.Stories;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 public class StoriesListAdapter extends RecyclerView.Adapter {
 
+    private FirebaseFirestore firebaseFirestore;
+    StorageReference references;
     public List<Stories> storiesList;
 
     public StoriesListAdapter(List<Stories> storiesList) {
@@ -61,14 +77,48 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
             btnBookmark = (Button) itemView.findViewById(R.id.btn_bookmark);
             btnLike = (Button) itemView.findViewById(R.id.btn_like);
             itemView.setOnClickListener(this);
+
+            firebaseFirestore = FirebaseFirestore.getInstance();
+            references = FirebaseStorage.getInstance().getReference();
+
+
+
         }
 
         // Bind with data from firebase
         public void bindView(int position){
-            userName.setText(storiesList.get(position).getAuthor());
+            String id = storiesList.get(position).getAuthor();
             postTitle.setText(storiesList.get(position).getTitle());
             postPreview.setText(storiesList.get(position).getContent());
             //Log.d("TAG", "stories length : "+storiesList.size());
+
+            DocumentReference ref = firebaseFirestore.collection("users").document(id);
+            StorageReference profileRef = references.child("users/"+id+"/user.jpg");
+
+            ref.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            userName.setText(document.getString("name"));
+                        } else {
+                            Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+
+            profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                @Override
+                public void onSuccess(Uri uri) {
+                    Picasso.get().load(uri).into(profileImage);
+                }
+            });
+
         }
 
         @Override
