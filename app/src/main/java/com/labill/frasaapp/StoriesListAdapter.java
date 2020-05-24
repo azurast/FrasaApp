@@ -15,9 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -28,6 +33,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
@@ -37,6 +44,7 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
     private FirebaseFirestore firebaseFirestore;
     StorageReference references;
     public List<Stories> storiesList;
+    public String idStory;
 
     public StoriesListAdapter(List<Stories> storiesList) {
         this.storiesList = storiesList;
@@ -88,6 +96,7 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
         // Bind with data from firebase
         public void bindView(int position){
             String id = storiesList.get(position).getAuthor();
+            String title = storiesList.get(position).getTitle();
             postTitle.setText(storiesList.get(position).getTitle());
             postPreview.setText(storiesList.get(position).getContent());
             //Log.d("TAG", "stories length : "+storiesList.size());
@@ -101,13 +110,13 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                     if(task.isSuccessful()){
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
-                            Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                           // Log.d(TAG, "DocumentSnapshot data: " + document.getData());
                             userName.setText(document.getString("name"));
                         } else {
-                            Log.d(TAG, "No such document");
+                            //Log.d(TAG, "No such document");
                         }
                     } else {
-                        Log.d(TAG, "get failed with ", task.getException());
+                        //Log.d(TAG, "get failed with ", task.getException());
                     }
                 }
             });
@@ -119,7 +128,45 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                 }
             });
 
+            //Retrieve story's id
+            Query loadStory = firebaseFirestore.collection("stories").
+                    whereEqualTo("title", title);
+
+            loadStory.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    for (DocumentChange doc : documentSnapshots.getDocumentChanges()){
+
+                        if (doc.getType() == DocumentChange.Type.ADDED){
+
+                            idStory = doc.getDocument().getId();
+                            Log.d(postTitle.getText().toString(), idStory);
+                            StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
+                            Log.d("link", storyRef.toString());
+
+                            storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Picasso.get().load(uri).into(postImage);
+                                }
+                            });
+
+
+                        }
+                        else
+                        {
+                            Log.d("ini", "gagal");
+                        }
+                    }
+
+                }
+            });
+
+
+
+
         }
+
 
         @Override
         public void onClick(View v) {

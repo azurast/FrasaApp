@@ -99,8 +99,6 @@ public class Profile2Activity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         userId = FirebaseAuth.getInstance().getUid();
 
-        DocumentReference documentReference = FirebaseFirestore.getInstance().collection("users").document(userId);
-
         // Get each total
         documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
