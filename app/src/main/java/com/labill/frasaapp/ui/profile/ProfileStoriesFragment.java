@@ -75,7 +75,7 @@ public class ProfileStoriesFragment extends Fragment {
         // Buat Akses Data user, in this case username
         //Log.d(TAG, "CurrentUserId : "+ currentUserId.toString());
         final DocumentReference documentReference = firebaseFirestore.collection("users").document(currentUserId.toString());
-        documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+       /* documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if(task.isSuccessful()){
@@ -87,11 +87,11 @@ public class ProfileStoriesFragment extends Fragment {
                     }
                 }
             }
-        });
+        });*/
 
 
         // Query to Retrieve Stories that the current user writes
-        firebaseFirestore.collection("stories").whereEqualTo("author", userName).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        firebaseFirestore.collection("stories").whereEqualTo("author", currentUserId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 Log.d(TAG, "Task executed");

@@ -14,7 +14,7 @@ public class Stories {
     }
 
     // Full
-    public Stories(String author, String title, String content, String genre, boolean published, int layout, int likes, ImageView photo) {
+    public Stories(String id, String author, String title, String content, String genre, boolean published, int layout, int likes, ImageView photo) {
         this.author = author;
         this.title = title;
         this.content = content;
