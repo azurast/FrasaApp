@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,6 +16,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -29,6 +37,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.Stories;
+import com.labill.frasaapp.ui.home.HomeFragment;
+import com.labill.frasaapp.ui.home.HomeViewModel;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -42,9 +52,14 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class StoriesListAdapter extends RecyclerView.Adapter {
 
     private FirebaseFirestore firebaseFirestore;
+    private FirebaseAuth mAuth;
     StorageReference references;
+
     public List<Stories> storiesList;
     public String idStory;
+    private boolean processLike = false;
+    private boolean processBookmark = false;
+    private DatabaseReference databaseLike;
 
     public StoriesListAdapter(List<Stories> storiesList) {
         this.storiesList = storiesList;
@@ -60,6 +75,8 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ListViewHolder) holder).bindView(position);
+
+        //isLike(storiesList.get(position).toString());
     }
 
     @Override
@@ -67,11 +84,55 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
         return storiesList.size();
     }
 
+    /*private void isLike(String postId)
+    {
+        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        DatabaseReference likeReference = FirebaseDatabase.getInstance().getReference()
+                .child("likes").child(postId);
+
+        likeReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.child(firebaseUser.getUid()).exists()){
+                    btnLike.setBackgroundResource(R.drawable.like_t);
+                }
+                else{
+                    btnLike.setBackgroundResource(R.drawable.like_f);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void numOfLike (final TextView numOfLikes, String postid)
+    {
+        DatabaseReference numLike = FirebaseDatabase.getInstance().getReference().child("likes")
+                .child(postid);
+
+        numLike.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                numOfLikes.setText(dataSnapshot.getChildrenCount()+"");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }*/
+
+
     private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView postImage;
         private CircleImageView profileImage;
         private TextView postTitle, userName, postPreview, numOfLikes;
-        private Button btnBookmark, btnLike;
+        private Button btnLike, btnBookmark;
 
         public ListViewHolder(View itemView){
             super(itemView);
@@ -86,9 +147,41 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
             btnLike = (Button) itemView.findViewById(R.id.btn_like);
             itemView.setOnClickListener(this);
 
+            mAuth = FirebaseAuth.getInstance();
             firebaseFirestore = FirebaseFirestore.getInstance();
             references = FirebaseStorage.getInstance().getReference();
+            databaseLike = FirebaseDatabase.getInstance().getReference().child("likes");
+            databaseLike.keepSynced(true);
+            btnLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    processLike = true;
 
+                        databaseLike.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(processLike) {
+                                    if (dataSnapshot.child(idStory).hasChild(mAuth.getCurrentUser().getUid())) {
+                                        databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                        btnLike.setBackgroundResource(R.drawable.like_f);
+                                        processLike = false;
+                                    } else {
+
+                                        databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).setValue("aa");
+                                        Log.d("inilike", "likedNih");
+                                        btnLike.setBackgroundResource(R.drawable.like_t);
+                                        processLike = false;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                }
+            });
 
 
         }
