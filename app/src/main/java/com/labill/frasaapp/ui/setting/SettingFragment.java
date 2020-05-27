@@ -1,14 +1,23 @@
 package com.labill.frasaapp.ui.setting;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,11 +41,14 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.labill.frasaapp.BuildConfig;
 import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.ui.login_and_signup.SignUpActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,11 +74,11 @@ public class SettingFragment extends Fragment {
     private String mParam2;
 
     private ImageView pp;
-    private Button changepp, save;
+    private Button changepp, changepp2, save;
     private EditText bio, name, email;
     private String id, defBio;
-
-
+    String currentPhotoPath;
+    private Uri imageUri;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -97,6 +109,9 @@ public class SettingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         defBio = "Hi! Enjoy my stories!";
 
@@ -142,7 +157,29 @@ public class SettingFragment extends Fragment {
                 //open gallery
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Log.d("uri",MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
                 startActivityForResult(openGalleryIntent, 1000);
+            }
+        });
+
+        // content://media/external/images/media
+        // content://com.labill.frasaapp.provider/external_files/user.jpg
+        changepp2.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                //open camera
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                File photo = new File(Environment.getExternalStorageDirectory(),  "user");
+                imageUri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider", photo);
+                Log.d("uri",imageUri.toString());
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                startActivityForResult(intent, 2000);
+                Log.d("permission","yo");
+                //askCameraPermissions();
             }
         });
 
@@ -188,6 +225,70 @@ public class SettingFragment extends Fragment {
         });
     }
 
+    private void askCameraPermissions() {
+        if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+            Log.d("perm", "t");
+            ActivityCompat.requestPermissions(getActivity(),new String[] {Manifest.permission.CAMERA}, 101);
+        }else {
+            Log.d("perm", "f");
+            dispatchTakePictureIntent();
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        Log.d("perm2", "in");
+        if(requestCode == 101){
+            Log.d("perm2", "in2");
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Log.d("perm2", "t");
+                dispatchTakePictureIntent();
+            }else {
+                Log.d("perm2", "f");
+                Toast.makeText(getActivity(), "Camera Permission is Required to Use camera.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getActivity(),
+                        "net.smallacademy.android.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, 2000);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String imageFileName = "user.jpg";
+//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -196,11 +297,32 @@ public class SettingFragment extends Fragment {
         {
             if(resultCode== Activity.RESULT_OK){
                 Uri imgUri = data.getData();
+                Log.d("inigambar",imgUri.toString());
                 pp.setImageURI(imgUri);
 
                 uploadImageToFirebase(imgUri);
             }
         }
+
+        if(data!=null)
+        {
+            Log.d("pesen","isi");
+            if(requestCode==2000)
+            {
+                if (resultCode == Activity.RESULT_OK) {
+                    Uri selectedImage = data.getData();
+                    Log.d("inigambar",selectedImage.toString());
+                    pp.setImageURI(selectedImage);
+
+                    uploadImageToFirebase(selectedImage);
+                }
+            }
+        }
+        else
+        {
+            Log.d("pesen","null");
+        }
+
     }
 
     private void uploadImageToFirebase(Uri imgUri) {
@@ -229,6 +351,7 @@ public class SettingFragment extends Fragment {
         View RootView = inflater.inflate(R.layout.fragment_setting, container, false);
         pp = (ImageView) RootView.findViewById(R.id.pp);
         changepp = RootView.findViewById(R.id.change);
+        changepp2 = RootView.findViewById(R.id.change2);
         save = RootView.findViewById(R.id.buttSave);
         name = RootView.findViewById(R.id.etName);
         bio = RootView.findViewById(R.id.etBio);

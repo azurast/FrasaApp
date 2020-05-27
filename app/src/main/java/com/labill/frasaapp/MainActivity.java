@@ -3,6 +3,7 @@ package com.labill.frasaapp;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -59,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Menu menu = findViewById(R.menu.activity_main_drawer);
 
+        if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+            Intent so = new Intent(MainActivity.this, LoginActivity.class);
+            so.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(so);
+        }
+
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         id = mAuth.getCurrentUser().getUid();
@@ -113,15 +120,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        Log.d("menu","selected");
         // Handle item selection
         switch (item.getItemId()) {
 
-            case R.id.nav_settings:
-                FirebaseAuth.getInstance().signOut();
+            case R.id.nav_signout:
 
-                Intent so = new Intent(MainActivity.this, LoginActivity.class);
-                so.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(so);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

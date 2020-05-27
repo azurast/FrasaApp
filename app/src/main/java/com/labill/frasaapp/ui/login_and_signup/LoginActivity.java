@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-        if (user != null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             Intent home = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(home);
             finish();

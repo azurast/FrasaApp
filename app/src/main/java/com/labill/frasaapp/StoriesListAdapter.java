@@ -76,7 +76,7 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ListViewHolder) holder).bindView(position);
 
-        //isLike(storiesList.get(position).toString());
+        //isLike(storiesList.get().toString());
     }
 
     @Override
