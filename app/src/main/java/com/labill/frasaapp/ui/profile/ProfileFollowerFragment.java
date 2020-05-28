@@ -47,7 +47,7 @@ import javax.annotation.Nullable;
 public class ProfileFollowerFragment extends Fragment {
 
     // For checking logs regarded firebase
-    private static final String TAG = "ProfileFollowingLog";
+    private static final String TAG = "ProfileFollowerLog";
 
     // Declare Needed Variables
     private FirebaseFirestore firebaseFirestore;

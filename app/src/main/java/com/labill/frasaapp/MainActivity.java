@@ -111,11 +111,12 @@ public class MainActivity extends AppCompatActivity {
 //        fragmentManager.beginTransaction().add(R.id.drawer_layout, homeFragment).commit();
     }
 
+    // Remove 3 dot
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_main_drawer, menu);
-        return true;
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.activity_main_drawer, menu);
+        return false;
     }
 
     @Override

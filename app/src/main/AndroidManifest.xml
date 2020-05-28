@@ -38,10 +38,19 @@
         <activity android:name=".ui.profile.Profile2Activity" />
         <activity
             android:name=".ui.landing.LandingActivity"
+
+        <activity
+            android:name=".ui.reading_mode.ReadingActivity"
+            />
+
+        <activity
+            android:name=".ui.profile.Profile2Activity"
+            />
+
+        <activity android:name=".ui.landing.LandingActivity"
             android:label="Frasa">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

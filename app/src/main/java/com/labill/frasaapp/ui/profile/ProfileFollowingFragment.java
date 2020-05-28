@@ -89,7 +89,7 @@ public class ProfileFollowingFragment extends Fragment {
                         Map temp = (Map) documentSnapshot.get("following");
                         Log.d(TAG, "Temp : "+temp);
                         for(Object key : temp.keySet()){
-                            idList.add((String) key);
+                            idList.add((String)key);
                         }
                     }
                 }
@@ -106,7 +106,6 @@ public class ProfileFollowingFragment extends Fragment {
                     QuerySnapshot querySnapshot = task.getResult();
                     if(querySnapshot != null){
                         for(QueryDocumentSnapshot doc : querySnapshot) {
-                            Log.d(TAG, "document :" + doc);
                             for (String id : idList) {
                                 if (doc.getId().equals(id)) {
                                     followingList.add(doc.toObject(User.class));
@@ -116,7 +115,7 @@ public class ProfileFollowingFragment extends Fragment {
                         }
                     }
                 }
-                Log.d(TAG, "following list : "+followingList);
+                Log.d(TAG, "following list : "+followingList.toString());
             }
         });
 

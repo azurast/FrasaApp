@@ -62,6 +62,8 @@ public class Profile2Activity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
+
         setContentView(R.layout.activity_profile2);
 
         tabLayout = (TabLayout) findViewById(R.id.tlProfileTabs);
