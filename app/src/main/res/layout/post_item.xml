@@ -67,6 +67,7 @@
                 android:id="@+id/post_preview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLines="2"
                 android:text="Summary text" />
 
             <LinearLayout

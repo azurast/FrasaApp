@@ -51,6 +51,8 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class StoriesListAdapter extends RecyclerView.Adapter {
 
+    private OnItemClickListener listener;
+
     private FirebaseFirestore firebaseFirestore;
     private FirebaseAuth mAuth;
     StorageReference references;
@@ -61,15 +63,16 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
     private boolean processBookmark = false;
     private DatabaseReference databaseLike;
 
-    public StoriesListAdapter(List<Stories> storiesList) {
+    public StoriesListAdapter(List<Stories> storiesList, OnItemClickListener onItemClickListener) {
         this.storiesList = storiesList;
+        this.listener = onItemClickListener;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.post_item, parent, false);
-       return new ListViewHolder(view);
+       return new ListViewHolder(view, listener);
     }
 
     @Override
@@ -128,15 +131,18 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
     }*/
 
 
-    private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView postImage;
         private CircleImageView profileImage;
         private TextView postTitle, userName, postPreview, numOfLikes;
         private Button btnLike, btnBookmark;
+        OnItemClickListener onItemClickListener;
+        private String tempName;
 
-        public ListViewHolder(View itemView){
+        public ListViewHolder(View itemView, OnItemClickListener onItemClickListener){
             super(itemView);
 
+            this.onItemClickListener = onItemClickListener;
             postImage = (ImageView) itemView.findViewById(R.id.post_image);
             profileImage = (CircleImageView) itemView.findViewById(R.id.profile_image);
             postTitle = (TextView) itemView.findViewById(R.id.post_title);
@@ -152,12 +158,12 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
             references = FirebaseStorage.getInstance().getReference();
             databaseLike = FirebaseDatabase.getInstance().getReference().child("likes");
             databaseLike.keepSynced(true);
+
             btnLike.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     processLike = true;
-
-                        databaseLike.addValueEventListener(new ValueEventListener() {
+                    databaseLike.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 if(processLike) {
@@ -183,7 +189,7 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                 }
             });
 
-
+            itemView.setOnClickListener(this);
         }
 
         // Bind with data from firebase
@@ -204,6 +210,7 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                         DocumentSnapshot document = task.getResult();
                         if (document.exists()) {
                            // Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            tempName = document.getString("name");
                             userName.setText(document.getString("name"));
                         } else {
                             //Log.d(TAG, "No such document");
@@ -225,6 +232,7 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
             Query loadStory = firebaseFirestore.collection("stories").
                     whereEqualTo("title", title);
 
+            // Image
             loadStory.addSnapshotListener(new EventListener<QuerySnapshot>() {
                 @Override
                 public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
@@ -244,7 +252,6 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                                 }
                             });
 
-
                         }
                         else
                         {
@@ -255,15 +262,18 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                 }
             });
 
-
-
-
         }
-
 
         @Override
         public void onClick(View v) {
-
+            onItemClickListener.onItemClick(getAdapterPosition(), tempName);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position, String name);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
     }
 }

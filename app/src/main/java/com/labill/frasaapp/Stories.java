@@ -4,6 +4,7 @@ import android.widget.ImageView;
 
 public class Stories {
 
+    // author is id
     String author, title, content, genre;
     boolean published;
     int layout, likes;
@@ -14,7 +15,7 @@ public class Stories {
     }
 
     // Full
-    public Stories(String id, String author, String title, String content, String genre, boolean published, int layout, int likes, ImageView photo) {
+    public Stories(String id, String author, String title, String content, String genre, String name, boolean published, int layout, int likes, ImageView photo) {
         this.author = author;
         this.title = title;
         this.content = content;
@@ -26,7 +27,7 @@ public class Stories {
     }
 
     // Partial for testing
-    public Stories(String author, String title, String content) {
+    public Stories(String author, String title, String content, String name) {
         this.author = author;
         this.title = title;
         this.content = content;
@@ -34,10 +35,6 @@ public class Stories {
 
     public String getAuthor() {
         return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getTitle() {
@@ -55,4 +52,5 @@ public class Stories {
     public void setContent(String content) {
         this.content = content;
     }
+
 }

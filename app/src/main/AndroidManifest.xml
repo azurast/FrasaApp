@@ -14,8 +14,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.reading_mode.ReadingActivity" />
-        <activity android:name=".ui.profile.Profile2Activity" />
+
+        <activity
+            android:name=".ui.reading_mode.ReadingActivity"
+            />
+
+        <activity
+            android:name=".ui.profile.Profile2Activity"
+            />
 
         <activity android:name=".ui.landing.LandingActivity"
             android:label="Frasa">
