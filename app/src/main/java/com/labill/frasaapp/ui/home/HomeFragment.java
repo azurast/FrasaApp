@@ -2,6 +2,7 @@ package com.labill.frasaapp.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -30,11 +32,14 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.Stories;
 import com.labill.frasaapp.StoriesListAdapter;
 import com.labill.frasaapp.ui.reading_mode.ReadingActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,11 +48,13 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
 
     // For checking logs regarded firebase
     private static final String TAG = "HomeFragmentLog";
+    private String idStory;
 
     private HomeViewModel homeViewModel;
 
     // Firebase & List Adapter
     private FirebaseFirestore firebaseFirestore;
+    StorageReference references;
     private RecyclerView mainList;
     private StoriesListAdapter storiesListAdapter;
     private List<Stories> storiesList;
@@ -151,12 +158,18 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
     @Override
     public void onItemClick(int position, String name) {
         storiesList.get(position);
+        String title = storiesList.get(position).getTitle();
+        references = FirebaseStorage.getInstance().getReference();
+
+
         Intent intent = new Intent(getActivity(), ReadingActivity.class);
         // kurang pass photo
 //        Log.d(TAG, "name :"+storiesList.get(position).getName());
         intent.putExtra("title", storiesList.get(position).getTitle());
         intent.putExtra("name", name);
         intent.putExtra("content", storiesList.get(position).getContent());
+        //intent.putExtra("photo", idStory);
+
         startActivity(intent);
     }
 }
