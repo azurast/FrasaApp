@@ -10,7 +10,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class User {
 
     String name, bio, email, id;
-    List<Map> following;
+    Map<String, Object> following;
     List<String> bookmark, stories;
     //CircleImageView photo;
 
@@ -18,7 +18,7 @@ public class User {
 
     }
 
-    public User(String name, String bio, String email, String id, List<String> bookmark, List<Map> following, List<String> stories) {
+    public User(String name, String bio, String email, String id, List<String> bookmark, Map<String, Object> following, List<String> stories) {
         this.name = name;
         this.bio = bio;
         this.email = email;
@@ -29,7 +29,7 @@ public class User {
     }
 
     // Partial for testing
-    public User(String name, String id, List<Map> following) {
+    public User(String name, String id, Map<String, Object> following) {
         this.name = name;
         this.id = id;
         this.following = following;
@@ -43,7 +43,11 @@ public class User {
         return id;
     }
 
-    public List<Map> getFollowing() {
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Map<String, Object> getFollowing() {
         return following;
     }
 }

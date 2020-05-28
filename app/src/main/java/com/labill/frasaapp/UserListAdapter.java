@@ -41,9 +41,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
-public class UserListAdapter extends RecyclerView.Adapter {
+public class UserListAdapter extends RecyclerView.Adapter{
 
     private static final String TAG = "UserAdapterLog";
+
+    private OnItemClickListener listener;
     private List<User> userList;
 
     private FirebaseFirestore firebaseFirestore;
@@ -51,15 +53,16 @@ public class UserListAdapter extends RecyclerView.Adapter {
     private FirebaseAuth mAuth;
     StorageReference references;
 
-    public UserListAdapter(List<User> userList){
+    public UserListAdapter(List<User> userList, OnItemClickListener onItemClickListener){
         this.userList = userList;
+        this.listener = onItemClickListener;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.follow_item, parent, false);
-        return new ListViewHolder(view);
+        return new ListViewHolder(view, listener);
     }
 
     @Override
@@ -98,14 +101,17 @@ public class UserListAdapter extends RecyclerView.Adapter {
 
     private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+        OnItemClickListener onItemClickListener;
         private CircleImageView profileImage;
         private TextView userName;
         private Button btnFollowing;
+        private String id;
 
         // Assign
-        public ListViewHolder(View itemView){
+        public ListViewHolder(View itemView, OnItemClickListener onItemClickListener){
             super(itemView);
 
+            this.onItemClickListener = onItemClickListener;
             profileImage = itemView.findViewById(R.id.profile_image);
             userName = itemView.findViewById(R.id.user_name);
             btnFollowing = itemView.findViewById(R.id.btn_following);
@@ -126,6 +132,7 @@ public class UserListAdapter extends RecyclerView.Adapter {
             User user = userList.get(position);
 
             Log.d(TAG, "bind user id : "+userList.get(position).getId());
+            id = userList.get(position).getId();
             Log.d(TAG, "bind user name : "+userList.get(position).getName());
             userName.setText(user.getName());
             btnFollowing.setVisibility(View.VISIBLE);
@@ -164,8 +171,15 @@ public class UserListAdapter extends RecyclerView.Adapter {
 
         @Override
         public void onClick(View v) {
-
+            onItemClickListener.onItemClick(getAdapterPosition(), id);
         }
     }
-}
 
+    public interface OnItemClickListener {
+        void onItemClick(int position, String id);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+}
