@@ -1,5 +1,6 @@
 package com.labill.frasaapp.ui.profile;
 
+import android.content.Intent;
 import android.hardware.usb.UsbRequest;
 import android.icu.lang.UScript;
 import android.os.Bundle;
@@ -35,8 +36,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.model.Document;
 import com.labill.frasaapp.R;
+import com.labill.frasaapp.StoriesListAdapter;
 import com.labill.frasaapp.User;
 import com.labill.frasaapp.UserListAdapter;
+import com.labill.frasaapp.ui.reading_mode.ReadingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +47,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
-public class ProfileFollowerFragment extends Fragment {
+public class ProfileFollowerFragment extends Fragment implements UserListAdapter.OnItemClickListener {
 
     // For checking logs regarded firebase
     private static final String TAG = "ProfileFollowerLog";
@@ -75,7 +78,7 @@ public class ProfileFollowerFragment extends Fragment {
         followingList = new ArrayList<>();
         idList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.rvFollowing);
-        userListAdapter = new UserListAdapter(followingList);
+        userListAdapter = new UserListAdapter(followingList, this);
         Log.d(TAG, "Recycler View : "+recyclerView);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
@@ -106,10 +109,12 @@ public class ProfileFollowerFragment extends Fragment {
                     QuerySnapshot querySnapshot = task.getResult();
                     if(querySnapshot != null){
                         for(QueryDocumentSnapshot doc : querySnapshot) {
-                            Log.d(TAG, "document :" + doc);
+                            Log.d(TAG, "document :" + doc.getId());
                             for (String id : idList) {
                                 if (doc.getId().equals(id)) {
-                                    followingList.add(doc.toObject(User.class));
+                                    User user = doc.toObject(User.class);
+                                    user.setId(doc.getId());
+                                    followingList.add(user);
                                     userListAdapter.notifyDataSetChanged();
                                 }
                             }
@@ -126,5 +131,12 @@ public class ProfileFollowerFragment extends Fragment {
         recyclerView.setAdapter(userListAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onItemClick(int position, String id) {
+        Intent intent = new Intent(getActivity(), SeeProfile.class);
+        intent.putExtra("id", id);
+        startActivity(intent);
     }
 }
