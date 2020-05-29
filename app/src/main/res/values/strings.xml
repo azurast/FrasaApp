@@ -46,5 +46,9 @@
     <string name="preview">Preview</string>
     <string name="pick_catego">Pick Category</string>
     <string name="pick_genre">Pick Genre</string>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+    <string name="underline"><u>U</u></string>
 >>>>>>> Stashed changes
 </resources>

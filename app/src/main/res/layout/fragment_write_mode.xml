@@ -66,12 +66,23 @@
     <EditText
         android:id="@+id/write_input"
         android:layout_width="match_parent"
+<<<<<<< Updated upstream
         android:layout_height="400dp"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="12dp"
         android:scrollbars="vertical"
         android:layout_marginRight="33dp"
         android:gravity="top"
+=======
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp"
+        android:layout_marginLeft="33dp"
+        android:layout_marginTop="120dp"
+        android:scrollbars="vertical"
+        android:layout_marginRight="33dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+>>>>>>> Stashed changes
         android:textAppearance="@style/start_writi"
         android:lineHeight="14sp"
         android:hint="Start writing here..."
@@ -81,5 +92,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_layo"
         app:layout_constraintVertical_bias="0.024" />
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 </androidx.constraintlayout.widget.ConstraintLayout>
 

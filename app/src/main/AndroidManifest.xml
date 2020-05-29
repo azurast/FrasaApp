@@ -10,6 +10,9 @@
     <uses-permission-sdk-23 android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     <application
         android:allowBackup="true"
