@@ -164,25 +164,6 @@ public class SettingFragment extends Fragment {
 
         // content://media/external/images/media
         // content://com.labill.frasaapp.provider/external_files/user.jpg
-        changepp2.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                //open camera
-
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                File photo = new File(Environment.getExternalStorageDirectory(),  "user");
-                imageUri = FileProvider.getUriForFile(getActivity(), BuildConfig.APPLICATION_ID + ".provider", photo);
-                Log.d("uri",imageUri.toString());
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-
-                startActivityForResult(intent, 2000);
-                Log.d("permission","yo");
-                //askCameraPermissions();
-            }
-        });
-
         save.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -225,70 +206,6 @@ public class SettingFragment extends Fragment {
         });
     }
 
-    private void askCameraPermissions() {
-        if(ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            Log.d("perm", "t");
-            ActivityCompat.requestPermissions(getActivity(),new String[] {Manifest.permission.CAMERA}, 101);
-        }else {
-            Log.d("perm", "f");
-            dispatchTakePictureIntent();
-        }
-
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d("perm2", "in");
-        if(requestCode == 101){
-            Log.d("perm2", "in2");
-            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                Log.d("perm2", "t");
-                dispatchTakePictureIntent();
-            }else {
-                Log.d("perm2", "f");
-                Toast.makeText(getActivity(), "Camera Permission is Required to Use camera.", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null) {
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException ex) {
-
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getActivity(),
-                        "net.smallacademy.android.fileprovider",
-                        photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
-                startActivityForResult(takePictureIntent, 2000);
-            }
-        }
-    }
-
-    private File createImageFile() throws IOException {
-        // Create an image file name
-        String imageFileName = "user.jpg";
-//        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -309,13 +226,17 @@ public class SettingFragment extends Fragment {
             Log.d("pesen","isi");
             if(requestCode==2000)
             {
-                if (resultCode == Activity.RESULT_OK) {
-                    Uri selectedImage = data.getData();
-                    Log.d("inigambar",selectedImage.toString());
-                    pp.setImageURI(selectedImage);
+               /* if (resultCode == Activity.RESULT_OK) {
+                    File f = new File(currentPhotoPath);
+                    selectedImage.setImageUri.fromFile(f);
 
-                    uploadImageToFirebase(selectedImage);
-                }
+                    Intent mediaScanIntent = new Intent (Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    Uri contentUri = Uri.fromFile(f);
+                    mediaScanIntent.setData(contentUri);
+                    this.sendBroadcast (mediaScanIntent);
+
+                    uploadImageToFirebase(contentUri);
+                }*/
             }
         }
         else

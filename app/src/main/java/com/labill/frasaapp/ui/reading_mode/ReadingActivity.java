@@ -145,76 +145,51 @@ public class ReadingActivity extends AppCompatActivity {
 
             }
         });
-        /*databaseLike.addListenerForSingleValueEvent(new ValueEventListener() {
+
+        //cek udh kelike belum
+        databaseLike.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // get total available quest
                 if(dataSnapshot.child(idStory).hasChild(mAuth.getCurrentUser().getUid()))
                 {
-                    databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).removeValue();
-                    buttLike.setBackgroundResource(R.drawable.like_f);
-                    processLike = false;
+                    buttLike.setBackgroundResource(R.drawable.like_t);
                 }
                 else
                 {
-                    databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).setValue("aaa");
-                    buttLike.setBackgroundResource(R.drawable.like_t);
-
-                    processLike = false;
+                    buttLike.setBackgroundResource(R.drawable.like_f);
                 }
-            }
-        });*/
-
-        //Num of Like
-/*        databaseLike.child(idStory)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // get total available quest
-                        int size = (int) dataSnapshot.getChildrenCount();
-                        numOfLike.setText(size);
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        numOfLike.setText("0");
-                    }
-                });
-
-       /* firebaseFirestore.collection("likes").document(idStory).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            QuerySnapshot query = task.getResult();
-                            List<DocumentSnapshot> documentSnapshots = query.getDocuments();
-                            int count = 0;
-                            for (DocumentSnapshot document: documentSnapshots){
-                                count++;
-                            }
-                            numOfLike.setText(count);
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-        });
-        */
-
-
-        //Cek apakah sudah like
-        /*DocumentReference likeRef = firebaseFirestore.collection("likes").document("idStory");
-
-        likeRef.get().addValueEventListener(new ValueEventListener() {
-
-        databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("likestatus","already liked");
-                buttLike.setBackgroundResource(R.drawable.like_t);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });*/
+        });
+
+
+        //cek udh bookmark belum
+        databaseBookmark.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // get total available quest
+                if(dataSnapshot.hasChild(mAuth.getCurrentUser().getUid()))
+                {
+                    if(dataSnapshot.child(mAuth.getCurrentUser().getUid()).hasChild(idStory)) {
+                        buttBookmark.setBackgroundResource(R.drawable.bookmark_t);
+                    }
+                }
+                else
+                {
+                    buttBookmark.setBackgroundResource(R.drawable.bookmark_f);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
         buttLike.setOnClickListener(new View.OnClickListener() {
             @Override
