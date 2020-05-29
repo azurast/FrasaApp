@@ -49,7 +49,6 @@ public class SeeProfile extends AppCompatActivity {
     private ViewPager viewPager;
     public PagerAdapter pagerAdapter;
     FirebaseFirestore db;
-    FirebaseAuth mAuth;
     StorageReference references;
 
     private ImageView pp;
@@ -60,6 +59,7 @@ public class SeeProfile extends AppCompatActivity {
     private String userId;
     List<Object> test;
     Map<String, Long> total;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +67,7 @@ public class SeeProfile extends AppCompatActivity {
 
         setContentView(R.layout.activity_see_profile);
         Intent onClickIntent = getIntent();
-        String recvId= onClickIntent.getStringExtra("id");
+        final String recvId= onClickIntent.getStringExtra("id");
 
         tabLayout = (TabLayout) findViewById(R.id.tlProfileTabs);
         viewPager = findViewById(R.id.viewPager);
@@ -75,7 +75,6 @@ public class SeeProfile extends AppCompatActivity {
         name = findViewById(R.id.tvAuthorName);
         bio = findViewById(R.id.tvAuthorBio);
 
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         references = FirebaseStorage.getInstance().getReference();
         id = recvId;
@@ -90,7 +89,6 @@ public class SeeProfile extends AppCompatActivity {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 name.setText(documentSnapshot.getString("name"));
                 bio.setText(documentSnapshot.getString("bio"));
-
             }
         });
 
@@ -100,8 +98,9 @@ public class SeeProfile extends AppCompatActivity {
                 Picasso.get().load(uri).into(pp);
             }
         });
+
         firebaseFirestore = FirebaseFirestore.getInstance();
-        userId = FirebaseAuth.getInstance().getUid();
+        userId = recvId;
         test = new ArrayList<>();
         total = new HashMap<>();
 
@@ -126,10 +125,29 @@ public class SeeProfile extends AppCompatActivity {
             }
         });
 
-        pagerAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        pagerAdapter = new SeePageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), userId);
         viewPager.setAdapter(pagerAdapter);
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//        // Yang mau dikirim ke 3 tab fragment
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id", userId);
+//        Log.d(TAG, "current user id :"+userId);
+//
+//        // Define fragments
+//        SeeStoriesFragment fra1 = new SeeStoriesFragment();
+//        SeeFollowersFragment fra2 = new SeeFollowersFragment();
+//        SeeFollowingFragment fra3 = new SeeFollowingFragment();
+//
+//        // Kirim ke fragment
+//        fra1.setArguments(bundle);
+//        fra2.setArguments(bundle);
+//        fra3.setArguments(bundle);
+
+
+
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -152,5 +170,6 @@ public class SeeProfile extends AppCompatActivity {
 
             }
         });
+
     }
 }

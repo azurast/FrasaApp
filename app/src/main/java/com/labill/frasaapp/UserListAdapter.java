@@ -1,6 +1,7 @@
 package com.labill.frasaapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
@@ -29,11 +30,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,28 +78,29 @@ public class UserListAdapter extends RecyclerView.Adapter{
         return userList.size();
     }
 
+    // Check if user is following that person
     private void isFollowing(final String userId, final Button followBtn){
 
-//        Log.d(TAG, "final user id : "+userId);
-//        //DatabaseReference isFollowRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid()).child("following");
-//        DocumentReference followingReference = firebaseFirestore.collection("users").document(mAuth.getUid());
-//        followingReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-//                if(task.isSuccessful()){
-//                    DocumentSnapshot documentSnapshot = task.getResult();
-//                    if(documentSnapshot!=null){
-//                        Map followList = (Map) documentSnapshot.get("following");
-//                        Log.d(TAG, "contains user id ? "+followList.containsKey(userId));
-//                        if(followList.containsKey(userId)){
-//                            followBtn.setText("Following");
-//                        }else{
-//                            followBtn.setText("Follow");
-//                        }
-//                    }
-//                }
-//            }
-//        });
+        Log.d(TAG, "final user id : "+userId);
+        //DatabaseReference isFollowRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid()).child("following");
+        DocumentReference followingReference = firebaseFirestore.collection("users").document(mAuth.getUid());
+        followingReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot!=null){
+                        Map followList = (Map) documentSnapshot.get("following");
+                        Log.d(TAG, "contains user id ? "+followList.containsKey(userId));
+                        if(followList.containsKey(userId)){
+                            followBtn.setText("Following");
+                        }else{
+                            followBtn.setText("Follow");
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -124,41 +128,64 @@ public class UserListAdapter extends RecyclerView.Adapter{
         }
 
         // Bind
-        public void bindView(int position){
+        public void bindView(final int position){
 
             // User who is logged in
             firebaseUser = mAuth.getCurrentUser();
             // User in list
-            User user = userList.get(position);
-
-            Log.d(TAG, "bind user id : "+userList.get(position).getId());
+            final User user = userList.get(position);
+            //Log.d(TAG, "bind user id : "+userList.get(position).getId());
             id = userList.get(position).getId();
-            Log.d(TAG, "bind user name : "+userList.get(position).getName());
+            //Log.d(TAG, "bind user name : "+userList.get(position).getName());
             userName.setText(user.getName());
             btnFollowing.setVisibility(View.VISIBLE);
 
-
             isFollowing(user.getId(), btnFollowing);
-
 //            if(user.getId().equals(firebaseUser.getUid())) {
 //                btnFollowing.setVisibility(View.GONE);
 //            }
 
-            // When following button is clicked
-//            btnFollowing.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    DatabaseReference followingRef = FirebaseDatabase.getInstance().getReference().child("users").child(firebaseUser.getUid()).child("following").child(user.getId());
-//                    DatabaseReference followersRef = FirebaseDatabase.getInstance().getReference().child("users").child(user.getId()).child("followers").child(firebaseUser.getUid());
-//                    if(btnFollowing.getText().toString().equals("follow")){
-//                        followingRef.setValue(true);
-//                        followersRef.setValue(true);
-//                    }else{
-//                        followingRef.removeValue();
-//                        followersRef.removeValue();
-//                    }
-//                }
-//            });
+            //When following button is clicked
+            btnFollowing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "following btn is clicked :"+btnFollowing);
+                    Log.d(TAG, "user dlm on click :"+user);
+
+                    // Punya user
+                    final DocumentReference userRef= firebaseFirestore.collection("users").document(firebaseUser.getUid());
+                    // Punya follower
+                    final DocumentReference followerRef = firebaseFirestore.collection("users").document(user.getId());
+
+                    // Belum di follow, mau follow
+                    if(btnFollowing.getText().toString().equalsIgnoreCase("Follow")){
+                        Log.d(TAG, "tulisan di button "+btnFollowing.getText().toString());
+                        Log.d(TAG, "btn tulisan follow");
+
+                        // tambah
+                        userRef.update("total.following", 1);
+                        followerRef.update("total.followers", 1);
+
+                        userRef.update("following."+user.getId(), true);
+                        followerRef.update("followers."+firebaseUser.getUid(), true);
+
+                        // set text button jd following
+                        btnFollowing.setText("Following");
+
+                    }else{ // Sudah di follow, mau unfollow
+                        Log.d(TAG, "tulisan di button "+btnFollowing.getText().toString());
+                        Log.d(TAG, "btn tulisan following");
+                        // hapus
+                        userRef.update("total.following", 1);
+                        followerRef.update("total.followers", 1);
+
+                        userRef.update("following."+user.getId(), FieldValue.delete());
+                        followerRef.update("followers."+firebaseUser.getUid(), FieldValue.delete());
+
+                        btnFollowing.setText("Follow");
+                    }
+                }
+            });
 
             StorageReference profileRef = references.child("users/"+userList.get(position).getId()+"/user.jpg");
             profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
