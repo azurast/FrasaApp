@@ -19,14 +19,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     // Author Name
+
     <TextView
         android:id="@+id/tvAuthorName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="10dp"
         android:text="John Doe"
-        android:textSize="20sp"
         android:textColor="@color/darkGrey"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
@@ -34,11 +35,12 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_image" />
 
     // Author Bio
+
     <TextView
         android:id="@+id/tvAuthorBio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="10dp"
         android:text="Lorem Ipsum Dolor Sit Amet"
         android:textColor="@color/darkGrey"
         android:textSize="14sp"
@@ -48,18 +50,32 @@
         app:layout_constraintTop_toBottomOf="@+id/tvAuthorName" />
 
     // Tab Layout
+
+    <Button
+        android:id="@+id/buttFollow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:text="Follow"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAuthorBio" />
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlProfileTabs"
         android:layout_width="match_parent"
         android:layout_height="49dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvAuthorBio"
+        app:layout_constraintTop_toBottomOf="@+id/buttFollow"
         app:tabIndicatorColor="@color/colorPrimaryDark">
 
         // Stories
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/storiesTab"
             android:layout_width="wrap_content"
@@ -67,6 +83,7 @@
             android:text="Stories\n0" />
 
         // Followers
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/followerTab"
             android:layout_width="wrap_content"
@@ -74,6 +91,7 @@
             android:text="Followers\n0" />
 
         // Following
+
         <com.google.android.material.tabs.TabItem
             android:id="@+id/followingTab"
             android:layout_width="wrap_content"

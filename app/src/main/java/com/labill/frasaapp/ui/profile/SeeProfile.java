@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.util.Log;
@@ -58,6 +59,8 @@ public class SeeProfile extends AppCompatActivity {
     private FirebaseFirestore firebaseFirestore;
     public Map temp;
     private String userId;
+    private Button buttFollow;
+
     List<Object> test;
     Map<String, Long> total;
     @Override
@@ -74,6 +77,7 @@ public class SeeProfile extends AppCompatActivity {
         pp = findViewById(R.id.profile_image);
         name = findViewById(R.id.tvAuthorName);
         bio = findViewById(R.id.tvAuthorBio);
+        buttFollow = findViewById(R.id.buttFollow);
 
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
