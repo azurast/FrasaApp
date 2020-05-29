@@ -1,5 +1,6 @@
 package com.labill.frasaapp.ui.write;
 
+<<<<<<< HEAD
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.FragmentManager;
@@ -11,28 +12,58 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+=======
+<<<<<<< Updated upstream
+=======
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+>>>>>>> Stashed changes
+import androidx.lifecycle.ViewModelProviders;
+
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+<<<<<<< HEAD
 import android.util.Base64;
 import android.util.Log;
 import android.util.TypedValue;
+=======
+<<<<<<< Updated upstream
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.labill.frasaapp.R;
+
+public class write_mode extends Fragment {
+
+    private WriteModeViewModel mViewModel;
+=======
+import android.util.Log;
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+<<<<<<< HEAD
 import android.widget.ImageView;
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
 import android.widget.TextView;
 
 import com.labill.frasaapp.R;
 
+<<<<<<< HEAD
 import java.io.ByteArrayOutputStream;
 
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
 import static android.widget.TextView.BufferType.SPANNABLE;
 
 public class write_mode extends Fragment {
@@ -43,9 +74,13 @@ public class write_mode extends Fragment {
     public TextView publish;
     public TextView save;
     public TextView title;
+<<<<<<< HEAD
     String[] stickers;
     Float[] xPos;
     Float[] yPos;
+=======
+>>>>>>> Stashed changes
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
 
     public static write_mode newInstance() {
         return new write_mode();
@@ -54,6 +89,12 @@ public class write_mode extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+        return inflater.inflate(R.layout.fragment_write_mode, container, false);
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
         View view = inflater.inflate(R.layout.fragment_write_mode, container, false);
         prev = view.findViewById(R.id.preview);
         dwEdit = view.findViewById(R.id.write_input);
@@ -64,6 +105,7 @@ public class write_mode extends Fragment {
         final String genre  = getArguments().getString("genre");
         final String title2  = getArguments().getString("title");
         final String image  = getArguments().getString("image");
+<<<<<<< HEAD
         final Integer TotalStickers  = getArguments().getInt("totalstickers");
         stickers = new String[TotalStickers];
         xPos = new Float[TotalStickers];
@@ -73,10 +115,13 @@ public class write_mode extends Fragment {
             xPos[i]  = getArguments().getFloat("xPos"+i);
             yPos[i]  = getArguments().getFloat("yPos"+i);
         }
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
 
         Log.i("test3", image);
         Log.i("test2", genre);
         Log.i("test", title2);
+<<<<<<< HEAD
         Log.i("test", String.valueOf(yPos[0]));
         Log.i("test", stickers[0]);
         Log.i("test", String.valueOf(xPos[0]));
@@ -100,6 +145,9 @@ public class write_mode extends Fragment {
 //        imageView.getLayoutParams().width = width;
 //        imageView.getLayoutParams().height = height;
 //        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+=======
+        title.setText(title2);
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
 
         dwEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -117,13 +165,23 @@ public class write_mode extends Fragment {
             @Override
             public void onClick(View view) {
                 write_second fragment = new write_second();
+<<<<<<< HEAD
                 Bundle args = new Bundle();
+=======
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                Bundle args = new Bundle();
+//                args.putString("edit", dwEdit.getText().toString());
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
                 args.putString("title", title.getText().toString());
                 args.putString("genre", genre);
                 args.putString("image", image);
                 fragment.setArguments(args);
+<<<<<<< HEAD
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
                 fragmentTransaction.replace(R.id.write3, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
@@ -136,12 +194,15 @@ public class write_mode extends Fragment {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 Bundle args = new Bundle();
+<<<<<<< HEAD
                 for (int i = 0; i< TotalStickers; i++){
                     args.putString("stickers"+i, stickers[i]);
                     args.putFloat("xPos"+i,xPos[i]);
                     args.putFloat("yPos"+i,yPos[i]);
                 }
                 args.putInt("total", TotalStickers);
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
                 args.putString("edit", dwEdit.getText().toString());
                 args.putString("title", title.getText().toString());
                 args.putString("genre", genre);
@@ -154,6 +215,7 @@ public class write_mode extends Fragment {
         });
 
         return view;
+<<<<<<< HEAD
     }
 
     public final static Bitmap stringToBitmap(String in){
@@ -162,6 +224,11 @@ public class write_mode extends Fragment {
     }
 
 
+=======
+>>>>>>> Stashed changes
+    }
+
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
