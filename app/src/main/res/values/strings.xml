@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">FrasaApp</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -17,13 +17,15 @@
     <string name="menu_drafts">Drafts</string>
     <string name="menu_my_writings">My Writings</string>
     <string name="menu_about">About the App</string>
+    <string name="menu_setting">Setting</string>
     <string name="menu_bookmarks">Bookmarks</string>
     <string name="user_name">John Doe</string>
     <string name="menu_profile">Profile</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- General-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="title_activity_signup">Sign up</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -38,8 +40,23 @@
     <string name="remember_me">Remember Me</string>
     <string name="prompt_name">Name</string>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+
+    <!-- Profile -->
+>>>>>>> Stashed changes
     <string name="following">Following</string>
+    <string name="follow">Follow</string>
+
+    <!-- Start Writing -->
+    <string name="next">Next</string>
+    <string name="preview">Preview</string>
+    <string name="pick_catego">Pick Category</string>
+    <string name="pick_genre">Pick Genre</string>
+    <string name="action_signout">Sign Out</string>
+<!--    <string name="following" tools:ignore="DuplicateDefinition">Following</string>-->
+
 
     <!-- Start Writing -->
     <string name="next">Next</string>
@@ -48,5 +65,8 @@
     <string name="pick_genre">Pick Genre</string>
     <string name="underline"><u>U</u></string>
     <string name="cover">LAUNCHER LOGO</string>
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 </resources>

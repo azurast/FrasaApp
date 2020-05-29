@@ -1,11 +1,17 @@
 package com.labill.frasaapp.ui.write;
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+>>>>>>> Stashed changes
 import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Bitmap;
@@ -22,6 +28,7 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 import android.widget.Button;
 import android.widget.ImageView;
@@ -29,20 +36,31 @@ import android.widget.TextView;
 =======
 import android.widget.ImageView;
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+>>>>>>> Stashed changes
 
 import com.labill.frasaapp.R;
 
 public class Before_Publish_Fragment extends Fragment {
 
     public ImageView cover;
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
     TextView text, title;
     String[] stickers;
     Float[] xPos;
     Float[] yPos;
     Button publish;
+<<<<<<< Updated upstream
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
     private BeforePublishViewModel mViewModel;
 
     public static Before_Publish_Fragment newInstance() {
@@ -57,7 +75,10 @@ public class Before_Publish_Fragment extends Fragment {
         final String title2  = getArguments().getString("title");
         final String image  = getArguments().getString("image");
         final String isi  = getArguments().getString("edit");
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
         final Integer TotalStickers  = getArguments().getInt("total");
         stickers = new String[TotalStickers];
         xPos = new Float[TotalStickers];
@@ -92,6 +113,7 @@ public class Before_Publish_Fragment extends Fragment {
             imageView.getLayoutParams().height = height1;
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         }
+<<<<<<< Updated upstream
 =======
 
         Log.i("test4", isi);
@@ -101,6 +123,8 @@ public class Before_Publish_Fragment extends Fragment {
 
         cover = view.findViewById(R.id.cover);
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
 
         if(image == "") {
 
@@ -108,16 +132,23 @@ public class Before_Publish_Fragment extends Fragment {
             Bitmap pic = stringToBitmap(image);
             cover.setImageBitmap(pic);
             int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
+<<<<<<< Updated upstream
 <<<<<<< HEAD
             int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 312, getResources().getDisplayMetrics());
 =======
             int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics());
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 312, getResources().getDisplayMetrics());
+>>>>>>> Stashed changes
             cover.getLayoutParams().height = height;
             cover.getLayoutParams().width = width;
             cover.setScaleType(ImageView.ScaleType.FIT_XY);
         }
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,8 +156,11 @@ public class Before_Publish_Fragment extends Fragment {
 
             }
         });
+<<<<<<< Updated upstream
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
         return view;
     }
 

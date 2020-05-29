@@ -58,7 +58,11 @@
 <<<<<<< HEAD
         android:layout_marginLeft="50dp"
 =======
+<<<<<<< Updated upstream
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
         android:gravity="top"
         android:text="Title"
         android:textAppearance="@style/choose_layo"
@@ -67,7 +71,11 @@
         app:layout_constraintHorizontal_bias="0.0"
 =======
         app:layout_constraintHorizontal_bias="0.087"
+<<<<<<< Updated upstream
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -85,12 +93,16 @@
         android:inputType="textMultiLine"
 =======
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
         android:layout_height="400dp"
         android:layout_marginLeft="33dp"
         android:layout_marginTop="12dp"
         android:scrollbars="vertical"
         android:layout_marginRight="33dp"
         android:gravity="top"
+<<<<<<< Updated upstream
 =======
         android:layout_height="match_parent"
         android:layout_marginBottom="55dp"
@@ -102,6 +114,9 @@
         android:inputType="textMultiLine"
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
         android:textAppearance="@style/start_writi"
         android:lineHeight="14sp"
         android:hint="Start writing here..."
@@ -116,10 +131,14 @@
 
 =======
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 
 
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
 </androidx.constraintlayout.widget.ConstraintLayout>
 

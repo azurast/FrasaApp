@@ -6,21 +6,28 @@ import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 =======
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.constraintlayout.widget.Constraints;
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProviders;
 
 <<<<<<< HEAD
+<<<<<<< Updated upstream
 =======
 <<<<<<< Updated upstream
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipDescription;
@@ -30,16 +37,22 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.LayerDrawable;
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 <<<<<<< HEAD
+<<<<<<< Updated upstream
 =======
 <<<<<<< Updated upstream
 
@@ -54,6 +67,8 @@ public class write_second extends Fragment {
     private WriteSecondViewModel mViewModel;
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
 import androidx.viewpager.widget.ViewPager;
 
 import android.util.Base64;
@@ -89,13 +104,30 @@ public class write_second extends Fragment implements View.OnDragListener {
     public TabItem stickerTab, frameTab;
     private ViewPager viewPager;
     public WriteAdapter writeAdapter;
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
     Bundle args;
 
     int id1 = 0;
 =======
+<<<<<<< Updated upstream
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.labill.frasaapp.R;
+
+public class write_second extends Fragment {
+
+    private WriteSecondViewModel mViewModel;
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
 
     public static write_second newInstance() {
         return new write_second();
@@ -105,15 +137,20 @@ public class write_second extends Fragment implements View.OnDragListener {
     @SuppressLint("ClickableViewAccessibility")
 =======
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
     @SuppressLint("ClickableViewAccessibility")
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_write_second, container, false);
 <<<<<<< HEAD
+<<<<<<< Updated upstream
 =======
 <<<<<<< Updated upstream
         WriteFragment f1 = new WriteFragment();
@@ -123,6 +160,8 @@ public class write_second extends Fragment implements View.OnDragListener {
         fragmentTransaction.commit();
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
 
         final String genre  = getArguments().getString("genre");
         final String title  = getArguments().getString("title");
@@ -131,10 +170,14 @@ public class write_second extends Fragment implements View.OnDragListener {
         Log.i("test2", genre);
         Log.i("test", title);
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         args = new Bundle();
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+        args = new Bundle();
+>>>>>>> Stashed changes
         prev = view.findViewById(R.id.preview);
         next = view.findViewById(R.id.next);
         cover = view.findViewById(R.id.cover);
@@ -150,10 +193,14 @@ public class write_second extends Fragment implements View.OnDragListener {
 
 
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
         viewPager.setVisibility(View.VISIBLE);
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+        viewPager.setVisibility(View.VISIBLE);
+>>>>>>> Stashed changes
         tab.setOnTabSelectedListener(new OnTabSelectedListener() {
             @Override
             public void onTabSelected(Tab tabs) {
@@ -187,11 +234,15 @@ public class write_second extends Fragment implements View.OnDragListener {
             Bitmap pic = stringToBitmap(image);
             cover.setImageBitmap(pic);
             int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
+<<<<<<< Updated upstream
 <<<<<<< HEAD
             int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 312, getResources().getDisplayMetrics());
 =======
             int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics());
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 312, getResources().getDisplayMetrics());
+>>>>>>> Stashed changes
             cover.getLayoutParams().height = height;
             cover.getLayoutParams().width = width;
             cover.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -213,12 +264,16 @@ public class write_second extends Fragment implements View.OnDragListener {
             @Override
             public void onClick(View view) {
                 write_mode fragment = new write_mode();
+<<<<<<< Updated upstream
 <<<<<<< HEAD
                 args.putInt("totalstickers", id1);
 =======
                 Bundle args = new Bundle();
 //                args.putInt("layout", );
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+                args.putInt("totalstickers", id1);
+>>>>>>> Stashed changes
                 args.putString("title", title);
                 args.putString("genre", genre);
                 args.putString("image", finalImage);
@@ -231,19 +286,32 @@ public class write_second extends Fragment implements View.OnDragListener {
             }
         });
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+=======
+        WriteFragment f1 = new WriteFragment();
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.remove(f1);
+        fragmentTransaction.commit();
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
         return view;
     }
 
     @Override
 <<<<<<< HEAD
+<<<<<<< Updated upstream
 =======
 <<<<<<< Updated upstream
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
     public boolean onDrag(View view, DragEvent event) {
         // Defines a variable to store the action type for the incoming event
         int action = event.getAction();
@@ -299,21 +367,29 @@ public class write_second extends Fragment implements View.OnDragListener {
                 String dragData = item.getText().toString();
 
                 // Displays a message containing the dragged data.
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 //                Toast.makeText(getActivity(), "Dragged data is " + dragData, Toast.LENGTH_SHORT).show();
 =======
                 Toast.makeText(getActivity(), "Dragged data is " + dragData, Toast.LENGTH_SHORT).show();
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+//                Toast.makeText(getActivity(), "Dragged data is " + dragData, Toast.LENGTH_SHORT).show();
+>>>>>>> Stashed changes
 
 
                 // Invalidates the view to force a redraw
                 view.invalidate();
+<<<<<<< Updated upstream
 <<<<<<< HEAD
                 ImageView v = (ImageView) event.getLocalState();
 =======
 
                 View v = (View) event.getLocalState();
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+                ImageView v = (ImageView) event.getLocalState();
+>>>>>>> Stashed changes
                 v.setId(View.generateViewId());
                 ViewGroup owner = (ViewGroup) v.getParent();
                 owner.removeView(v);//remove the dragged view
@@ -324,6 +400,7 @@ public class write_second extends Fragment implements View.OnDragListener {
                 constraints.clone(container);
 
                 container.addView(v);//Add the dragged view
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
                 constraints.connect(v.getId(), ConstraintSet.TOP, container.getId(), ConstraintSet.TOP, 60);
@@ -333,6 +410,8 @@ public class write_second extends Fragment implements View.OnDragListener {
                 constraints.clear(container.getId(), ConstraintSet.BOTTOM);
 
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
                 view.findViewById(v.getId()).setOnTouchListener(new View.OnTouchListener() {
                     @Override
                     public boolean onTouch(View view, MotionEvent event) {
@@ -340,29 +419,42 @@ public class write_second extends Fragment implements View.OnDragListener {
                             case MotionEvent.ACTION_DOWN:
                                 xCoOrdinate = view.getX() - event.getRawX();
                                 yCoOrdinate = view.getY() - event.getRawY();
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+
+>>>>>>> Stashed changes
                                 break;
                             case MotionEvent.ACTION_MOVE:
                                 view.animate().x(event.getRawX() + xCoOrdinate).y(event.getRawY() + yCoOrdinate).setDuration(0).start();
                                 break;
                             default:
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
 
                                 Log.i("testX", String.valueOf(view.getX()));
                                 Log.i("testY", String.valueOf(view.getY()));
                                 args.putFloat("xPos"+(id1-1), view.getX());
                                 args.putFloat("yPos"+(id1-1), view.getY());
+<<<<<<< Updated upstream
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
                                 return false;
                         }
                         return true;
                     }
                 });
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
                 Bitmap bitmap = ((BitmapDrawable)v.getDrawable().getCurrent()).getBitmap();
                 String convert = bitmapToString(bitmap);
                 args.putString("stickers"+id1, convert);
@@ -372,11 +464,14 @@ public class write_second extends Fragment implements View.OnDragListener {
                 id1++;
 
                 Log.d("test", String.valueOf(id1));
+<<<<<<< Updated upstream
 =======
                     // ... similarly add other constraints
                 v.setVisibility(View.VISIBLE);//finally set Visibility to VISIBLE
 
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
                 // Returns true. DragEvent.getResult() will return true.
                 return true;
             case DragEvent.ACTION_DRAG_ENDED:
@@ -398,14 +493,20 @@ public class write_second extends Fragment implements View.OnDragListener {
         return false;
     }
 
+<<<<<<< Updated upstream
 <<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
     public final static String bitmapToString(Bitmap in){
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         in.compress(Bitmap.CompressFormat.JPEG.PNG, 100, bytes);
         return Base64.encodeToString(bytes.toByteArray(),Base64.DEFAULT);
     }
+<<<<<<< Updated upstream
 =======
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
 
     public final static Bitmap stringToBitmap(String in){
         byte[] bytes = Base64.decode(in, Base64.DEFAULT);
@@ -413,10 +514,15 @@ public class write_second extends Fragment implements View.OnDragListener {
     }
 
     @Override
+<<<<<<< Updated upstream
 <<<<<<< HEAD
 =======
 >>>>>>> Stashed changes
 >>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mViewModel = ViewModelProviders.of(this).get(WriteSecondViewModel.class);

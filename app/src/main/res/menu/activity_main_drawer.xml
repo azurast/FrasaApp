@@ -28,6 +28,23 @@
     <group
         android:id="@+id/group_three"
         android:checkableBehavior="single">
+<<<<<<< Updated upstream
+=======
+
+        <item
+            android:id="@+id/nav_settings"
+            android:orderInCategory="100"
+            android:title="@string/action_settings"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/nav_signout"
+            android:orderInCategory="100"
+            android:title="@string/action_signout"
+            app:showAsAction="never"
+            />
+
+>>>>>>> Stashed changes
         <item
             android:id="@+id/nav_about"
             android:title="@string/menu_about"/>

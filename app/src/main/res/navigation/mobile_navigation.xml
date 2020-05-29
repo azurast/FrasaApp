@@ -17,7 +17,11 @@
 <!--            app:destination="@id/nav_home_second" />-->
     </fragment>
 
+<<<<<<< Updated upstream
     // HOME SECOND (MASIH GATAU BUAT APA)
+=======
+<!--    // HOME SECOND (MASIH GATAU BUAT APA)-->
+>>>>>>> Stashed changes
     <fragment
         android:id="@+id/nav_home_second"
         android:name="com.labill.frasaapp.ui.home.HomeSecondFragment"
@@ -61,4 +65,14 @@
         android:name="com.labill.frasaapp.ui.about.AboutFragment"
         android:label="@string/menu_about"
         tools:layout="@layout/fragment_about"/>
+<<<<<<< Updated upstream
+=======
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.labill.frasaapp.ui.setting.SettingFragment"
+        android:label="@string/menu_setting"
+        tools:layout="@layout/fragment_setting"/>
+
+>>>>>>> Stashed changes
 </navigation>
