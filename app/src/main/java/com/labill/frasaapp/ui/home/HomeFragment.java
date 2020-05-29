@@ -161,7 +161,6 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
         String title = storiesList.get(position).getTitle();
         references = FirebaseStorage.getInstance().getReference();
 
-
         Intent intent = new Intent(getActivity(), ReadingActivity.class);
         // kurang pass photo
 //        Log.d(TAG, "name :"+storiesList.get(position).getName());

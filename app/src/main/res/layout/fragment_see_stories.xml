@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.bookmarks.BookmarksFragment">
+    tools:context=".ui.profile.SeeStoriesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvPost"
@@ -15,4 +15,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_editor_absoluteX="0dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
