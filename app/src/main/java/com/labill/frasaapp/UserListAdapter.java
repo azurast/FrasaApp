@@ -3,6 +3,7 @@ package com.labill.frasaapp;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -96,6 +98,8 @@ public class UserListAdapter extends RecyclerView.Adapter{
                             followBtn.setText("Following");
                         }else{
                             followBtn.setText("Follow");
+                            followBtn.setBackgroundColor(Color.rgb(229,229,229));
+                            followBtn.setTextColor(Color.rgb(191,102, 52));
                         }
                     }
                 }
@@ -141,6 +145,7 @@ public class UserListAdapter extends RecyclerView.Adapter{
             btnFollowing.setVisibility(View.VISIBLE);
 
             isFollowing(user.getId(), btnFollowing);
+
             if(user.getId().equals(firebaseUser.getUid())) {
                 btnFollowing.setVisibility(View.GONE);
             }
@@ -171,6 +176,8 @@ public class UserListAdapter extends RecyclerView.Adapter{
 
                         // set text button jd following
                         btnFollowing.setText("Following");
+                        btnFollowing.setBackgroundColor(Color.rgb(191,102, 52));
+                        btnFollowing.setTextColor(Color.rgb(255,255,255));
 
                     }else{ // Sudah di follow, mau unfollow
                         Log.d(TAG, "tulisan di button "+btnFollowing.getText().toString());
@@ -183,6 +190,8 @@ public class UserListAdapter extends RecyclerView.Adapter{
                         followerRef.update("followers."+firebaseUser.getUid(), FieldValue.delete());
 
                         btnFollowing.setText("Follow");
+                        btnFollowing.setBackgroundColor(Color.rgb(229,229,229));
+                        btnFollowing.setTextColor(Color.rgb(191,102, 52));
                     }
                 }
             });
