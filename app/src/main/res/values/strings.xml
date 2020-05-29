@@ -37,4 +37,16 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="remember_me">Remember Me</string>
     <string name="prompt_name">Name</string>
+<<<<<<< Updated upstream
+=======
+    <string name="following">Following</string>
+
+    <!-- Start Writing -->
+    <string name="next">Next</string>
+    <string name="preview">Preview</string>
+    <string name="pick_catego">Pick Category</string>
+    <string name="pick_genre">Pick Genre</string>
+    <string name="underline"><u>U</u></string>
+    <string name="cover">LAUNCHER LOGO</string>
+>>>>>>> Stashed changes
 </resources>
