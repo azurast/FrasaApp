@@ -39,6 +39,8 @@
     <string name="tab_text_2">Tab 2</string>
     <string name="remember_me">Remember Me</string>
     <string name="prompt_name">Name</string>
+
+    <!-- Profile -->
     <string name="following">Following</string>
     <string name="follow">Follow</string>
 
@@ -48,14 +50,9 @@
     <string name="pick_catego">Pick Category</string>
     <string name="pick_genre">Pick Genre</string>
     <string name="action_signout">Sign Out</string>
-<!--    <string name="following" tools:ignore="DuplicateDefinition">Following</string>-->
+    <!--    <string name="following" tools:ignore="DuplicateDefinition">Following</string>-->
+    <string name="search">Search</string>
+    <!--    <string name="following" tools:ignore="DuplicateDefinition">Following</string>-->
 
-
-    <!-- Start Writing -->
-    <string name="next">Next</string>
-    <string name="preview">Preview</string>
-    <string name="pick_catego">Pick Category</string>
-    <string name="pick_genre">Pick Genre</string>
-    <string name="following">Following</string>
 
 </resources>

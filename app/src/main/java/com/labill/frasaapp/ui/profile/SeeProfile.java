@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
@@ -41,14 +42,13 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Future;
 
-public class Profile2Activity extends AppCompatActivity {
+public class SeeProfile extends AppCompatActivity {
 
-    private static final String TAG = "Profile Activity Log";
+    private static final String TAG = "See Profile Log";
     private TabLayout tabLayout;
     private ViewPager viewPager;
     public PagerAdapter pagerAdapter;
     FirebaseFirestore db;
-    FirebaseAuth mAuth;
     StorageReference references;
 
     private ImageView pp;
@@ -59,12 +59,15 @@ public class Profile2Activity extends AppCompatActivity {
     private String userId;
     List<Object> test;
     Map<String, Long> total;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide();
 
-        setContentView(R.layout.activity_profile2);
+        setContentView(R.layout.activity_see_profile);
+        Intent onClickIntent = getIntent();
+        final String recvId= onClickIntent.getStringExtra("id");
 
         tabLayout = (TabLayout) findViewById(R.id.tlProfileTabs);
         viewPager = findViewById(R.id.viewPager);
@@ -72,22 +75,20 @@ public class Profile2Activity extends AppCompatActivity {
         name = findViewById(R.id.tvAuthorName);
         bio = findViewById(R.id.tvAuthorBio);
 
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
         references = FirebaseStorage.getInstance().getReference();
-        id = mAuth.getCurrentUser().getUid();
+        id = recvId;
 
         StorageReference profileRef = references.child("users/"+id+"/user.jpg");
 
         final DocumentReference documentReference = db.collection("users").document(id);
 
-        documentReference.addSnapshotListener(Profile2Activity.this, new EventListener<DocumentSnapshot>()
+        documentReference.addSnapshotListener(SeeProfile.this, new EventListener<DocumentSnapshot>()
         {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 name.setText(documentSnapshot.getString("name"));
                 bio.setText(documentSnapshot.getString("bio"));
-
             }
         });
 
@@ -97,8 +98,9 @@ public class Profile2Activity extends AppCompatActivity {
                 Picasso.get().load(uri).into(pp);
             }
         });
+
         firebaseFirestore = FirebaseFirestore.getInstance();
-        userId = FirebaseAuth.getInstance().getUid();
+        userId = recvId;
         test = new ArrayList<>();
         total = new HashMap<>();
 
@@ -123,10 +125,29 @@ public class Profile2Activity extends AppCompatActivity {
             }
         });
 
-        pagerAdapter = new PageAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        pagerAdapter = new SeePageAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), userId);
         viewPager.setAdapter(pagerAdapter);
 
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+//        // Yang mau dikirim ke 3 tab fragment
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id", userId);
+//        Log.d(TAG, "current user id :"+userId);
+//
+//        // Define fragments
+//        SeeStoriesFragment fra1 = new SeeStoriesFragment();
+//        SeeFollowersFragment fra2 = new SeeFollowersFragment();
+//        SeeFollowingFragment fra3 = new SeeFollowingFragment();
+//
+//        // Kirim ke fragment
+//        fra1.setArguments(bundle);
+//        fra2.setArguments(bundle);
+//        fra3.setArguments(bundle);
+
+
+
+
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
@@ -149,5 +170,6 @@ public class Profile2Activity extends AppCompatActivity {
 
             }
         });
+
     }
 }

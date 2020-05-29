@@ -1,9 +1,6 @@
 package com.labill.frasaapp.ui.profile;
 
-<<<<<<< iniaaron
-=======
 import android.content.Intent;
->>>>>>> master
 import android.hardware.usb.UsbRequest;
 import android.icu.lang.UScript;
 import android.os.Bundle;
@@ -48,20 +45,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-import com.labill.frasaapp.User;
-import com.labill.frasaapp.UserListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Nullable;
 
-
-public class ProfileFollowingFragment extends Fragment implements UserListAdapter.OnItemClickListener {
+public class SeeFollowingFragment extends Fragment implements UserListAdapter.OnItemClickListener {
 
     // For checking logs regarded firebase
     private static final String TAG = "ProfileFollowingLog";
@@ -72,10 +58,11 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
     private List<String> idList;
     private RecyclerView recyclerView;
     private UserListAdapter userListAdapter;
-    private String currentUserId = FirebaseAuth.getInstance().getUid();
+    private String currentUserId;
+    private Bundle bundle;
 
-    public static ProfileFollowerFragment newInstance(String param1, String param2) {
-        ProfileStoriesFragment fragment = new ProfileStoriesFragment();
+    public static SeeFollowingFragment  newInstance(String param1, String param2) {
+        SeeFollowingFragment  fragment = new SeeFollowingFragment ();
         Bundle args = new Bundle();
         return null;
     }
@@ -95,6 +82,9 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
         userListAdapter = new UserListAdapter(followingList, this);
         Log.d(TAG, "Recycler View : "+recyclerView);
         firebaseFirestore = FirebaseFirestore.getInstance();
+
+        bundle = this.getArguments();
+        currentUserId = bundle.getString("id");
 
         // Get Ids of People we follow
         firebaseFirestore.collection("users").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

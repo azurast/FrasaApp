@@ -1,9 +1,6 @@
 package com.labill.frasaapp.ui.profile;
 
-<<<<<<< iniaaron
-=======
 import android.content.Intent;
->>>>>>> master
 import android.hardware.usb.UsbRequest;
 import android.icu.lang.UScript;
 import android.os.Bundle;
@@ -48,23 +45,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-import com.labill.frasaapp.User;
-import com.labill.frasaapp.UserListAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Nullable;
 
-
-public class ProfileFollowingFragment extends Fragment implements UserListAdapter.OnItemClickListener {
+public class SeeFollowersFragment extends Fragment implements UserListAdapter.OnItemClickListener {
 
     // For checking logs regarded firebase
-    private static final String TAG = "ProfileFollowingLog";
+    private static final String TAG = "ProfileFollowerLog";
 
     // Declare Needed Variables
     private FirebaseFirestore firebaseFirestore;
@@ -72,10 +58,11 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
     private List<String> idList;
     private RecyclerView recyclerView;
     private UserListAdapter userListAdapter;
-    private String currentUserId = FirebaseAuth.getInstance().getUid();
+    private String currentUserId;
+    private Bundle bundle;
 
-    public static ProfileFollowerFragment newInstance(String param1, String param2) {
-        ProfileStoriesFragment fragment = new ProfileStoriesFragment();
+    public static SeeFollowersFragment newInstance(String param1, String param2) {
+        SeeFollowersFragment fragment = new SeeFollowersFragment();
         Bundle args = new Bundle();
         return null;
     }
@@ -88,13 +75,16 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_profile_following, container, false);
+        View view = inflater.inflate(R.layout.fragment_profile_follower, container, false);
         followingList = new ArrayList<>();
         idList = new ArrayList<>();
         recyclerView = (RecyclerView) view.findViewById(R.id.rvFollowing);
         userListAdapter = new UserListAdapter(followingList, this);
         Log.d(TAG, "Recycler View : "+recyclerView);
         firebaseFirestore = FirebaseFirestore.getInstance();
+        bundle = this.getArguments();
+        currentUserId = bundle.getString("id");
+
 
         // Get Ids of People we follow
         firebaseFirestore.collection("users").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -103,10 +93,10 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
                 if(task.isSuccessful()){
                     DocumentSnapshot documentSnapshot = task.getResult();
                     if(documentSnapshot != null){
-                        Map temp = (Map) documentSnapshot.get("following");
+                        Map temp = (Map) documentSnapshot.get("followers");
                         Log.d(TAG, "Temp : "+temp);
                         for(Object key : temp.keySet()){
-                            idList.add((String)key);
+                            idList.add((String) key);
                         }
                     }
                 }
@@ -123,6 +113,7 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
                     QuerySnapshot querySnapshot = task.getResult();
                     if(querySnapshot != null){
                         for(QueryDocumentSnapshot doc : querySnapshot) {
+                            Log.d(TAG, "document :" + doc.getId());
                             for (String id : idList) {
                                 if (doc.getId().equals(id)) {
                                     User user = doc.toObject(User.class);
@@ -134,7 +125,7 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
                         }
                     }
                 }
-                Log.d(TAG, "following list : "+followingList.toString());
+                Log.d(TAG, "followers list : "+followingList);
             }
         });
 
@@ -149,7 +140,6 @@ public class ProfileFollowingFragment extends Fragment implements UserListAdapte
     @Override
     public void onItemClick(int position, String id) {
         Intent intent = new Intent(getActivity(), SeeProfile.class);
-        Log.d(TAG, "id on click : "+id);
         intent.putExtra("id", id);
         startActivity(intent);
     }
