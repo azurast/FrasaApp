@@ -1,14 +1,23 @@
 package com.labill.frasaapp.ui.setting;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,11 +41,14 @@ import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.labill.frasaapp.BuildConfig;
 import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.ui.login_and_signup.SignUpActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -62,11 +74,11 @@ public class SettingFragment extends Fragment {
     private String mParam2;
 
     private ImageView pp;
-    private Button changepp, save;
+    private Button changepp, changepp2, save;
     private EditText bio, name, email;
     private String id, defBio;
-
-
+    String currentPhotoPath;
+    private Uri imageUri;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -97,6 +109,9 @@ public class SettingFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
 
         defBio = "Hi! Enjoy my stories!";
 
@@ -142,10 +157,13 @@ public class SettingFragment extends Fragment {
                 //open gallery
                 Intent openGalleryIntent = new Intent(Intent.ACTION_PICK,
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                Log.d("uri",MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
                 startActivityForResult(openGalleryIntent, 1000);
             }
         });
 
+        // content://media/external/images/media
+        // content://com.labill.frasaapp.provider/external_files/user.jpg
         save.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -196,11 +214,36 @@ public class SettingFragment extends Fragment {
         {
             if(resultCode== Activity.RESULT_OK){
                 Uri imgUri = data.getData();
+                Log.d("inigambar",imgUri.toString());
                 pp.setImageURI(imgUri);
 
                 uploadImageToFirebase(imgUri);
             }
         }
+
+        if(data!=null)
+        {
+            Log.d("pesen","isi");
+            if(requestCode==2000)
+            {
+               /* if (resultCode == Activity.RESULT_OK) {
+                    File f = new File(currentPhotoPath);
+                    selectedImage.setImageUri.fromFile(f);
+
+                    Intent mediaScanIntent = new Intent (Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    Uri contentUri = Uri.fromFile(f);
+                    mediaScanIntent.setData(contentUri);
+                    this.sendBroadcast (mediaScanIntent);
+
+                    uploadImageToFirebase(contentUri);
+                }*/
+            }
+        }
+        else
+        {
+            Log.d("pesen","null");
+        }
+
     }
 
     private void uploadImageToFirebase(Uri imgUri) {
@@ -229,6 +272,7 @@ public class SettingFragment extends Fragment {
         View RootView = inflater.inflate(R.layout.fragment_setting, container, false);
         pp = (ImageView) RootView.findViewById(R.id.pp);
         changepp = RootView.findViewById(R.id.change);
+        changepp2 = RootView.findViewById(R.id.change2);
         save = RootView.findViewById(R.id.buttSave);
         name = RootView.findViewById(R.id.etName);
         bio = RootView.findViewById(R.id.etBio);

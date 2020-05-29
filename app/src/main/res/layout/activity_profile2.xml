@@ -64,21 +64,21 @@
             android:id="@+id/storiesTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Stories\n65" />
+            android:text="Stories\n0" />
 
         // Followers
         <com.google.android.material.tabs.TabItem
             android:id="@+id/followerTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Followers\n130" />
+            android:text="Followers\n0" />
 
         // Following
         <com.google.android.material.tabs.TabItem
             android:id="@+id/followingTab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Following\n237" />
+            android:text="Following\n0" />
     </com.google.android.material.tabs.TabLayout>
 
     // Tab's Fragment Placeholder

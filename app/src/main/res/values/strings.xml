@@ -50,7 +50,9 @@
     <string name="pick_catego">Pick Category</string>
     <string name="pick_genre">Pick Genre</string>
     <string name="action_signout">Sign Out</string>
-<!--    <string name="following" tools:ignore="DuplicateDefinition">Following</string>-->
+    <!--    <string name="following" tools:ignore="DuplicateDefinition">Following</string>-->
+    <string name="search">Search</string>
+    <!--    <string name="following" tools:ignore="DuplicateDefinition">Following</string>-->
 
 
 </resources>

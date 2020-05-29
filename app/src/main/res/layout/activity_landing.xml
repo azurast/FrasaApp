@@ -16,10 +16,11 @@
         android:layout_marginTop="100dp"
         android:adjustViewBounds="true"
         android:scaleType="fitCenter"
+        android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/frasalogo" />
 
     <ImageButton
         android:id="@+id/buttStart"

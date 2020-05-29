@@ -1,5 +1,6 @@
 package com.labill.frasaapp.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,11 +25,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.Stories;
 import com.labill.frasaapp.StoriesListAdapter;
+import com.labill.frasaapp.ui.reading_mode.ReadingActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProfileStoriesFragment extends Fragment {
+public class ProfileStoriesFragment extends Fragment implements StoriesListAdapter.OnItemClickListener {
 
     // For checking logs regarded firebase
     private static final String TAG = "ProfileStoriesLog";
@@ -63,7 +65,7 @@ public class ProfileStoriesFragment extends Fragment {
         // Get Recycler View
         recyclerView = (RecyclerView) view.findViewById(R.id.rvPost);
         // Get List Adapter to hold our data
-        storiesListAdapter = new StoriesListAdapter(storiesList);
+        storiesListAdapter = new StoriesListAdapter(storiesList, this);
 
         // Get instance of firebase
         firebaseFirestore = FirebaseFirestore.getInstance();
@@ -75,26 +77,11 @@ public class ProfileStoriesFragment extends Fragment {
         // Buat Akses Data user, in this case username
         //Log.d(TAG, "CurrentUserId : "+ currentUserId.toString());
         final DocumentReference documentReference = firebaseFirestore.collection("users").document(currentUserId.toString());
-       /* documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if(task.isSuccessful()){
-                    DocumentSnapshot documentSnapshot = task.getResult();
-                    if(documentSnapshot != null){
-                        Log.d(TAG, "User stories :"+documentSnapshot.get("stories"));
-                        userName = (String) documentSnapshot.get("name");
-                        Log.d(TAG, "username :"+userName);
-                    }
-                }
-            }
-        });*/
-
 
         // Query to Retrieve Stories that the current user writes
         firebaseFirestore.collection("stories").whereEqualTo("author", currentUserId).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                Log.d(TAG, "Task executed");
                 if(task.isSuccessful()){
                     Log.d(TAG, "Task Successfull");
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
@@ -118,5 +105,16 @@ public class ProfileStoriesFragment extends Fragment {
 
         // Inflate the layout for this fragment
         return view;
+    }
+
+    @Override
+    public void onItemClick(int position, String name) {
+        storiesList.get(position);
+        Intent intent = new Intent(getActivity(), ReadingActivity.class);
+        // kurang pass photo
+        intent.putExtra("title", storiesList.get(position).getTitle());
+        intent.putExtra("name", name);
+        intent.putExtra("content", storiesList.get(position).getContent());
+        startActivity(intent);
     }
 }
