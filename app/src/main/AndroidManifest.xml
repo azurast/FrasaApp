@@ -32,8 +32,7 @@
         <activity android:name=".ui.profile.SeeProfile"></activity>
         <activity android:name=".ui.reading_mode.ReadingActivity" />
         <activity android:name=".ui.profile.Profile2Activity" />
-        <activity
-            android:name=".ui.landing.LandingActivity"
+
         <activity android:name=".ui.write.FragmentSticker"></activity>
 
         <provider
@@ -45,10 +44,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
-        <activity android:name=".ui.reading_mode.ReadingActivity" />
-        <activity android:name=".ui.profile.Profile2Activity" />
-
 
         <activity android:name=".ui.landing.LandingActivity"
             android:label="Frasa">

@@ -23,7 +23,7 @@
             <ImageView
                 android:id="@+id/post_image"
                 android:layout_width="match_parent"
-                android:layout_height="116dp"
+                android:layout_height="120dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
@@ -70,36 +70,6 @@
                 android:maxLines="2"
                 android:text="Summary text" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_bookmark"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bookmark_f" />
-
-                <Button
-                    android:id="@+id/btn_like"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/like_f" />
-
-                <TextView
-                    android:id="@+id/number_of_likes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginHorizontal="5dp"
-                    android:layout_weight="1"
-                    android:text="300" />
-            </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

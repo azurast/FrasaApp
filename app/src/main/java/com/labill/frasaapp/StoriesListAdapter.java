@@ -54,14 +54,12 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
     private OnItemClickListener listener;
 
     private FirebaseFirestore firebaseFirestore;
-    private FirebaseAuth mAuth;
+
     StorageReference references;
 
     public List<Stories> storiesList;
     public String idStory;
-    private boolean processLike = false;
-    private boolean processBookmark = false;
-    private DatabaseReference databaseLike;
+
 
     public StoriesListAdapter(List<Stories> storiesList, OnItemClickListener onItemClickListener) {
         this.storiesList = storiesList;
@@ -87,57 +85,14 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
         return storiesList.size();
     }
 
-    /*private void isLike(String postId)
-    {
-        final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        DatabaseReference likeReference = FirebaseDatabase.getInstance().getReference()
-                .child("likes").child(postId);
-
-        likeReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(firebaseUser.getUid()).exists()){
-                    btnLike.setBackgroundResource(R.drawable.like_t);
-                }
-                else{
-                    btnLike.setBackgroundResource(R.drawable.like_f);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-
-    private void numOfLike (final TextView numOfLikes, String postid)
-    {
-        DatabaseReference numLike = FirebaseDatabase.getInstance().getReference().child("likes")
-                .child(postid);
-
-        numLike.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                numOfLikes.setText(dataSnapshot.getChildrenCount()+"");
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
-
-
     class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private ImageView postImage;
         private CircleImageView profileImage;
         private TextView postTitle, userName, postPreview, numOfLikes;
         private Button btnLike, btnBookmark;
         OnItemClickListener onItemClickListener;
-        private String tempName;
+        private String tempName, tempName2;
+        private int position;
 
         public ListViewHolder(View itemView, OnItemClickListener onItemClickListener){
             super(itemView);
@@ -148,49 +103,13 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
             postTitle = (TextView) itemView.findViewById(R.id.post_title);
             userName = (TextView) itemView.findViewById(R.id.user_name);
             postPreview = (TextView) itemView.findViewById(R.id.post_preview);
-            numOfLikes = (TextView) itemView.findViewById(R.id.number_of_likes);
-            btnBookmark = (Button) itemView.findViewById(R.id.btn_bookmark);
-            btnLike = (Button) itemView.findViewById(R.id.btn_like);
             itemView.setOnClickListener(this);
 
-            mAuth = FirebaseAuth.getInstance();
             firebaseFirestore = FirebaseFirestore.getInstance();
             references = FirebaseStorage.getInstance().getReference();
-            databaseLike = FirebaseDatabase.getInstance().getReference().child("likes");
-            databaseLike.keepSynced(true);
-
-            btnLike.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    processLike = true;
-                    databaseLike.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if(processLike) {
-                                    if (dataSnapshot.child(idStory).hasChild(mAuth.getCurrentUser().getUid())) {
-                                        databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).removeValue();
-                                        btnLike.setBackgroundResource(R.drawable.like_f);
-                                        processLike = false;
-                                    } else {
-
-                                        databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).setValue("aa");
-                                        Log.d("inilike", "likedNih");
-                                        btnLike.setBackgroundResource(R.drawable.like_t);
-                                        processLike = false;
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                }
-            });
-
             itemView.setOnClickListener(this);
         }
+
 
         // Bind with data from firebase
         public void bindView(int position){
