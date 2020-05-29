@@ -237,7 +237,7 @@ public class ReadingActivity extends AppCompatActivity {
                     databaseBookmark.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.child(idStory).hasChild(mAuth.getCurrentUser().getUid()))
+                            if(dataSnapshot.child(mAuth.getCurrentUser().getUid()).hasChild(idStory))
                             {
                                 databaseBookmark.child(mAuth.getCurrentUser().getUid()).child(idStory).removeValue();
                                 buttBookmark.setBackgroundResource(R.drawable.bookmark_f);
