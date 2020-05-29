@@ -37,6 +37,7 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -67,9 +68,9 @@ public class ReadingActivity extends AppCompatActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         databaseLike = FirebaseDatabase.getInstance().getReference().child("likes");
-        databaseLike.keepSynced(true);
+       // databaseLike.keepSynced(true);
         databaseBookmark = FirebaseDatabase.getInstance().getReference().child("bookmarks");
-        databaseBookmark.keepSynced(true);
+        //databaseBookmark.keepSynced(true);
 
         tvTitle = findViewById(R.id.tvPostTitle);
         tvAuthor = findViewById(R.id.tvPostAuthor);
@@ -123,16 +124,69 @@ public class ReadingActivity extends AppCompatActivity {
             }
         });
 
-        /* Num of Like
-        firebaseFirestore.collection("likes").document(idStory)
+        databaseLike.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                // get total available quest
+                if(dataSnapshot.hasChild(idStory))
+                {
+                    int size = (int) dataSnapshot.child(idStory).getChildrenCount();
+                    Log.d("size", String.valueOf(size));
+                    numOfLike.setText(String.valueOf(size));
+                }
+                else
+                {
+                    numOfLike.setText("0");
+                }
+            }
 
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        /*databaseLike.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.child(idStory).hasChild(mAuth.getCurrentUser().getUid()))
+                {
+                    databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).removeValue();
+                    buttLike.setBackgroundResource(R.drawable.like_f);
+                    processLike = false;
+                }
+                else
+                {
+                    databaseLike.child(idStory).child(mAuth.getCurrentUser().getUid()).setValue("aaa");
+                    buttLike.setBackgroundResource(R.drawable.like_t);
+
+                    processLike = false;
+                }
+            }
+        });*/
+
+        //Num of Like
+/*        databaseLike.child(idStory)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // get total available quest
+                        int size = (int) dataSnapshot.getChildrenCount();
+                        numOfLike.setText(size);
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        numOfLike.setText("0");
+                    }
+                });
+
+       /* firebaseFirestore.collection("likes").document(idStory).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            QuerySnapshot query = task.getResult();
+                            List<DocumentSnapshot> documentSnapshots = query.getDocuments();
                             int count = 0;
-                            for (DocumentSnapshot document{
+                            for (DocumentSnapshot document: documentSnapshots){
                                 count++;
                             }
                             numOfLike.setText(count);
@@ -170,7 +224,7 @@ public class ReadingActivity extends AppCompatActivity {
 
                 if(processLike)
                 {
-                    databaseLike.addValueEventListener(new ValueEventListener() {
+                    databaseLike.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.child(idStory).hasChild(mAuth.getCurrentUser().getUid()))
@@ -205,18 +259,18 @@ public class ReadingActivity extends AppCompatActivity {
 
                 if(processBookmark)
                 {
-                    databaseBookmark.addValueEventListener(new ValueEventListener() {
+                    databaseBookmark.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             if(dataSnapshot.child(idStory).hasChild(mAuth.getCurrentUser().getUid()))
                             {
-                                databaseBookmark.child(idStory).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                databaseBookmark.child(mAuth.getCurrentUser().getUid()).child(idStory).removeValue();
                                 buttBookmark.setBackgroundResource(R.drawable.bookmark_f);
                                 processBookmark = false;
                             }
                             else
                             {
-                                databaseBookmark.child(idStory).child(mAuth.getCurrentUser().getUid()).setValue("aaa");
+                                databaseBookmark.child(mAuth.getCurrentUser().getUid()).child(idStory).setValue("aaa");
                                 buttBookmark.setBackgroundResource(R.drawable.bookmark_t);
 
                                 processBookmark = false;
