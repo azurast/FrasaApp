@@ -141,9 +141,9 @@ public class UserListAdapter extends RecyclerView.Adapter{
             btnFollowing.setVisibility(View.VISIBLE);
 
             isFollowing(user.getId(), btnFollowing);
-//            if(user.getId().equals(firebaseUser.getUid())) {
-//                btnFollowing.setVisibility(View.GONE);
-//            }
+            if(user.getId().equals(firebaseUser.getUid())) {
+                btnFollowing.setVisibility(View.GONE);
+            }
 
             //When following button is clicked
             btnFollowing.setOnClickListener(new View.OnClickListener() {
