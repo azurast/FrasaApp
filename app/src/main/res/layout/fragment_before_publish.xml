@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+=======
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+>>>>>>> Stashed changes
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/bpublish"
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+    android:background="#FFFFFF"
+    tools:context=".ui.write.Before_Publish_Fragment">
+
+
+    <View
+        android:id="@+id/text_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="60dp"
+        android:foregroundGravity="top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.004">
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="312dp"
+                android:layout_height="221dp"
+                android:background="@drawable/basic"
+                android:textAppearance="@style/choose_layo" />
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Title"
+                android:textAppearance="@style/choose_layo"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/my_write"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:textAppearance="@style/start_writi" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/publish_button"
+        android:layout_width="142dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:background="@drawable/group_3"
+        android:gravity="center"
+        android:text="Publish"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<<<<<<< Updated upstream
+=======
+    android:background="@color/white"
+    tools:context=".ui.write.Before_Publish_Fragment">
+
+    <ImageView
+        android:id="@+id/cover"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:clickable="true"
+        android:layout_marginTop="24dp"/>
+
+</FrameLayout>
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes

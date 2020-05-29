@@ -32,7 +32,7 @@
         <item name="android:textColor">#BF6634</item>
     </style>
     <style name="title1">
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">0.06</item>
         <item name="android:textColor">#BF6634</item>
     </style>

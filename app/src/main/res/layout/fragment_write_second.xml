@@ -8,6 +8,119 @@
     android:background="#FFFFFF"
     tools:context=".ui.write.WriteFragment">
 
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
+
+    <View
+        android:id="@+id/text_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+<<<<<<< Updated upstream
+=======
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="50dp"
+<<<<<<< Updated upstream
+=======
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
+        android:foregroundGravity="top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.129"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintVertical_bias="0.004">
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/cover"
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+                android:layout_width="312dp"
+                android:layout_height="221dp"
+=======
+                android:layout_width="350dp"
+                android:layout_height="221dp"
+                android:layout_marginTop="30dp"
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+                android:layout_width="312dp"
+                android:layout_height="221dp"
+>>>>>>> Stashed changes
+                android:background="@drawable/basic"
+                android:textAppearance="@style/choose_layo" />
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Title"
+                android:textAppearance="@style/choose_layo"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/my_write"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:textAppearance="@style/start_writi" />
+        </LinearLayout>
+    </ScrollView>
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+=======
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
     <TextView
         android:id="@+id/next"
         android:layout_width="wrap_content"
@@ -36,6 +149,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
     <TextView
         android:id="@+id/choose_layo"
         android:layout_width="wrap_content"
@@ -51,3 +168,71 @@
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
+=======
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+>>>>>>> Stashed changes
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#F9F9F9">
+
+            // Stickers
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/stickers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="STICKERS" />
+
+            // Frame color
+
+            <com.google.android.material.tabs.TabItem
+                android:id="@+id/frame"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="COLOR" />
+        </com.google.android.material.tabs.TabLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+<<<<<<< Updated upstream
+<<<<<<< HEAD
+=======
+>>>>>>> Stashed changes
+>>>>>>> c4d9ebe0eb3f8cceef47a4d892d364bfa0a03aa4
+=======
+=======
+    <TextView
+        android:id="@+id/choose_layo"
+        android:layout_width="wrap_content"
+        android:layout_height="33dp"
+        android:layout_marginTop="76dp"
+        android:gravity="top"
+        android:text="Choose Layout"
+        android:textAppearance="@style/choose_layo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.126"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+>>>>>>> 7436de52d37f0ad5d204ba1bf6f32d22412db8a6
+>>>>>>> Stashed changes
