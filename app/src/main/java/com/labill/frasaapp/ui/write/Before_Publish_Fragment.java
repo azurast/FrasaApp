@@ -22,8 +22,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.labill.frasaapp.R;
+import com.labill.frasaapp.ui.home.HomeFragment;
 
 public class Before_Publish_Fragment extends Fragment {
 
@@ -102,7 +104,17 @@ public class Before_Publish_Fragment extends Fragment {
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(getActivity(),"Yay! Your Story\nHas Been Published!", Toast.LENGTH_SHORT).show();
+                //buat save ke firebase
 
+
+                //ini buat pindah ke home
+                HomeFragment fragment = new HomeFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.bpublish, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         return view;
