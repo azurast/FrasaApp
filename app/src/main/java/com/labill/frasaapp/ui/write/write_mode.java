@@ -73,12 +73,6 @@ public class write_mode extends Fragment {
             yPos[i]  = getArguments().getFloat("yPos"+i);
         }
 
-        Log.i("test3", image);
-        Log.i("test2", genre);
-        Log.i("test", title2);
-        Log.i("test", String.valueOf(yPos[0]));
-        Log.i("test", stickers[0]);
-        Log.i("test", String.valueOf(xPos[0]));
         title.setText(title2);
 //        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
 //        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
@@ -143,6 +137,7 @@ public class write_mode extends Fragment {
                 args.putString("title", title.getText().toString());
                 args.putString("genre", genre);
                 args.putString("image", image);
+                args.putInt("color", color);
                 fragment.setArguments(args);
                 fragmentTransaction.replace(R.id.write3, fragment);
                 fragmentTransaction.addToBackStack(null);
