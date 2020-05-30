@@ -21,6 +21,10 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.model.Document;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.ui.home.HomeFragment;
@@ -51,6 +55,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivityLog";
     private AppBarConfiguration mAppBarConfiguration;
     private FirebaseAuth mAuth;
     FirebaseFirestore db;
@@ -80,30 +85,68 @@ public class MainActivity extends AppCompatActivity {
         id = mAuth.getCurrentUser().getUid();
 
         //fetch data from database
-        DocumentReference documentReference = db.collection("users").document(id);
-        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                name = documentSnapshot.getString("name");
-                email = documentSnapshot.getString("email");
-                bio = documentSnapshot.getString("bio");
-                photo = documentSnapshot.getString("photo");
+//        DocumentReference documentReference = db.collection("users").document(id);
+//        documentReference.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+//            @OverrideonEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+////
+//            public void
+//            }
+//        });
 
-                // Navbar Header
-                View navHeader = navigationView.getHeaderView(0);
-                TextView userName = navHeader.findViewById(R.id.user_name);
-                userName.setText(name);
-                final CircleImageView profilePhoto = navHeader.findViewById(R.id.profile_image);
-                StorageReference profileRef = FirebaseStorage.getInstance().getReference().child("users/"+id+"/user.jpg");
-                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                    @Override
-                    public void onSuccess(Uri uri) {
-                        Picasso.get().load(uri).into(profilePhoto);
+        db.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if(e!=null){
+                    Log.d(TAG, "Error : "+ e.getMessage());
+                }else{
+                    for(DocumentChange doc : queryDocumentSnapshots.getDocumentChanges()){
+                        QueryDocumentSnapshot currDoc = doc.getDocument();
+
+                        if(doc.getType() == DocumentChange.Type.ADDED){
+                            if(currDoc.getId().equals(id)) {
+                                Log.d(TAG, "added");
+                                name = currDoc.getString("name");
+                                email = currDoc.getString("email");
+                                bio = currDoc.getString("bio");
+                                photo = currDoc.getString("photo");
+                                // Navbar Header
+                                View navHeader = navigationView.getHeaderView(0);
+                                TextView userName = navHeader.findViewById(R.id.user_name);
+                                userName.setText(name);
+                                final CircleImageView profilePhoto = navHeader.findViewById(R.id.profile_image);
+                                StorageReference profileRef = FirebaseStorage.getInstance().getReference().child("users/" + id + "/user.jpg");
+                                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Picasso.get().load(uri).into(profilePhoto);
+                                    }
+                                });
+                            }
+                        }else if(doc.getType() == DocumentChange.Type.MODIFIED){
+                            if(currDoc.getId().equals(id)) {
+                                Log.d(TAG, "modified");
+                                name = currDoc.getString("name");
+                                email = currDoc.getString("email");
+                                bio = currDoc.getString("bio");
+                                photo = currDoc.getString("photo");
+                                // Navbar Header
+                                View navHeader = navigationView.getHeaderView(0);
+                                TextView userName = navHeader.findViewById(R.id.user_name);
+                                userName.setText(name);
+                                final CircleImageView profilePhoto = navHeader.findViewById(R.id.profile_image);
+                                StorageReference profileRef = FirebaseStorage.getInstance().getReference().child("users/" + id + "/user.jpg");
+                                profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Picasso.get().load(uri).into(profilePhoto);
+                                    }
+                                });
+                            }
+                        }
                     }
-                });
+                }
             }
         });
-
 
 
 
