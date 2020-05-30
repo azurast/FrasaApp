@@ -41,7 +41,6 @@ public class write_mode extends Fragment {
     public EditText dwEdit;
     public TextView prev;
     public TextView publish;
-    public TextView save;
     public TextView title;
     String[] stickers;
     Float[] xPos;
@@ -59,7 +58,6 @@ public class write_mode extends Fragment {
         dwEdit = view.findViewById(R.id.write_input);
         title = view.findViewById(R.id.choose_layo);
         publish = view.findViewById(R.id.publish);
-        save = view.findViewById(R.id.save);
 
         final String genre  = getArguments().getString("genre");
         final String title2  = getArguments().getString("title");
@@ -82,10 +80,9 @@ public class write_mode extends Fragment {
         Log.i("test", stickers[0]);
         Log.i("test", String.valueOf(xPos[0]));
         title.setText(title2);
-        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-
-
+//        int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+//        int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+//
 //        ConstraintLayout container1 = (ConstraintLayout) view.findViewById(R.id.write3);//caste the view into LinearLayout as our drag acceptable layout is LinearLayout
 //
 //        ImageView imageView = new ImageView(this.getContext());
