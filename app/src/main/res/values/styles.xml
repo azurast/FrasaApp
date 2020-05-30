@@ -52,5 +52,13 @@
         <item name="android:textColor">#817777</item>
     </style>
 
+    <style name="AverageTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/average</item>
+    </style>
+
+    <style name="AverageSansTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/average_sans</item>
+    </style>
+
 </resources>
 
