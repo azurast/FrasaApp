@@ -13,24 +13,27 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/welcome_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="64dp"
-            android:lineSpacingExtra="8sp"
-            android:text="Welcome \nBack"
-            android:textColor="@color/colorPrimary"
-            android:textSize="36sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/welcome_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="64dp"
+                android:fontFamily="@font/average"
+                android:lineSpacingExtra="8sp"
+                android:text="Welcome \nBack"
+                android:textColor="@color/colorPrimary"
+                android:textSize="36sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/email"
                 android:layout_width="349dp"
                 android:layout_height="50dp"
                 android:background="@drawable/input_text"
+                android:fontFamily="@font/average_sans"
                 android:hint="@string/prompt_email"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="20dp"
@@ -68,6 +71,7 @@
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/input_text"
+                android:fontFamily="@font/average_sans"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
@@ -100,6 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/average_sans"
                 android:text="Don't have an account? Sign Up "
                 android:textColor="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
