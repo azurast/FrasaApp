@@ -21,11 +21,14 @@ import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.auth.FirebaseAuth;
@@ -34,6 +37,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.labill.frasaapp.R;
+import com.labill.frasaapp.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -59,6 +63,8 @@ public class SeeProfile extends AppCompatActivity {
     public Map temp;
     private String userId;
     private Button buttFollow;
+    private List<String> idList;
+    private String currentUserId = FirebaseAuth.getInstance().getUid();
 
     List<Object> test;
     Map<String, Long> total;
@@ -78,14 +84,68 @@ public class SeeProfile extends AppCompatActivity {
         name = findViewById(R.id.tvAuthorName);
         bio = findViewById(R.id.tvAuthorBio);
         buttFollow = findViewById(R.id.buttFollow);
+        idList = new ArrayList<>();
 
         db = FirebaseFirestore.getInstance();
         references = FirebaseStorage.getInstance().getReference();
         id = recvId;
-
-        StorageReference profileRef = references.child("users/"+id+"/user.jpg");
+        Log.d("idnih", currentUserId);
 
         final DocumentReference documentReference = db.collection("users").document(id);
+        StorageReference profileRef = references.child("users/"+id+"/user.jpg");
+
+        DocumentReference userLogedin = db.collection("users").document(currentUserId);
+
+        // Get Ids of People we follow
+        db.collection("users").document(currentUserId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if(task.isSuccessful()){
+                    DocumentSnapshot documentSnapshot = task.getResult();
+                    if(documentSnapshot != null){
+                        Map temp = (Map) documentSnapshot.get("following");
+                        Log.d(TAG, "Temp : "+temp);
+                        for(Object key : temp.keySet()){
+                            idList.add((String) key);
+                        }
+                    }
+                }
+                Log.d(TAG, "Id List : "+idList);
+            }
+        });
+
+        //cek punya following ngga, kalo punya baru cek dia follow user ini ngga
+        userLogedin.collection("following").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                if(task.isSuccessful()){
+                    QuerySnapshot querySnapshot = task.getResult();
+
+                    if(querySnapshot != null){
+                        Log.d("followingcek", "yes");
+                        for(QueryDocumentSnapshot doc : querySnapshot) {
+                            Log.d("cekdoc", "document :" + doc.getId());
+                            for (String idUser : idList) {
+                                if (doc.getId().equals(id)) {
+                                    buttFollow.setText("Followed");
+                                    Log.d("followz","followed");
+                                }else{
+                                    buttFollow.setText("Follow");
+                                    Log.d("followz","follow");
+                                }
+
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    buttFollow.setText("Follow");
+                    Log.d("followz","follow");
+                }
+            }
+        });
 
         documentReference.addSnapshotListener(SeeProfile.this, new EventListener<DocumentSnapshot>()
         {
