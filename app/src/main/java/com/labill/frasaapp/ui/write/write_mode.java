@@ -143,6 +143,7 @@ public class write_mode extends Fragment {
                 args.putString("title", title.getText().toString());
                 args.putString("genre", genre);
                 args.putString("image", image);
+                args.putInt("color", color);
                 fragment.setArguments(args);
                 fragmentTransaction.replace(R.id.write3, fragment);
                 fragmentTransaction.addToBackStack(null);

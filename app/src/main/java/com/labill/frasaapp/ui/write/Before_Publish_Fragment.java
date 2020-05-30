@@ -77,11 +77,6 @@ public class Before_Publish_Fragment extends Fragment {
             xPos[i]  = getArguments().getFloat("xPos"+i);
             yPos[i]  = getArguments().getFloat("yPos"+i);
         }
-        if(color==0){
-
-        }else{
-            view.findViewById(R.id.bpublish).setBackgroundColor(color);
-        }
         cover = view.findViewById(R.id.cover);
         title = view.findViewById(R.id.title2);
         text = view.findViewById(R.id.my_write);
@@ -90,6 +85,11 @@ public class Before_Publish_Fragment extends Fragment {
         title.setText(title2);
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
+        if(color==0){
+
+        }else{
+            view.findViewById(R.id.bpublish).setBackgroundColor(color);
+        }
         int height1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
         int width1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
 
@@ -100,7 +100,6 @@ public class Before_Publish_Fragment extends Fragment {
             imageView.setId(View.generateViewId());
             Bitmap convert1 = stringToBitmap(stickers[i]);
             imageView.setImageBitmap(convert1);
-//        imageView.animate().translationX(xPos[0]).translationY(yPos[0]).setDuration(0).start();
             imageView.setX(xPos[i]);
             imageView.setY(yPos[i]);
             container1.addView(imageView);
