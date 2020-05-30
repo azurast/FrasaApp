@@ -2,6 +2,7 @@ package com.labill.frasaapp.ui.reading_mode;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,19 +13,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -33,16 +29,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.R;
+import com.labill.frasaapp.ui.profile.SeeProfile;
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
-import java.util.List;
-import java.util.Map;
-
 import javax.annotation.Nullable;
-
-import io.grpc.Context;
 
 public class ReadingActivity extends AppCompatActivity {
 
@@ -56,7 +46,7 @@ public class ReadingActivity extends AppCompatActivity {
 
     private TextView tvTitle, tvAuthor, tvContent, numOfLike;
     private ImageView storyImg;
-    private String idStory;
+    private String idStory, idAuthor;
     private Button buttComment, buttLike, buttBookmark;
 
     @Override
@@ -91,6 +81,29 @@ public class ReadingActivity extends AppCompatActivity {
         tvTitle.setText(recvTitle);
         tvAuthor.setText(recvAuthor);
         tvContent.setText(recvContent);
+
+        //Retrieve author's id
+        Query loadAuthor = firebaseFirestore.collection("users").
+                whereEqualTo("name", recvAuthor);
+
+        loadAuthor.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
+                for (DocumentChange doc : documentSnapshots.getDocumentChanges()){
+
+                    if (doc.getType() == DocumentChange.Type.ADDED){
+
+                        idAuthor = doc.getDocument().getId();
+
+                    }
+                    else
+                    {
+                        Log.d("ini", "gagal");
+                    }
+                }
+
+            }
+        });
 
         //Retrieve story's id
         com.google.firebase.firestore.Query loadStory = firebaseFirestore.collection("stories").
@@ -258,6 +271,25 @@ public class ReadingActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        //klik nama pengarang
+        tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReadingActivity.this, SeeProfile.class);
+                intent.putExtra("id", idAuthor);
+                startActivity(intent);
+            }
+        });
+
+        buttComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReadingActivity.this, CommentActivity.class);
+                intent.putExtra("id", idStory);
+                startActivity(intent);
             }
         });
 

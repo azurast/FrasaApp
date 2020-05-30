@@ -85,7 +85,7 @@
             android:layout_marginRight="10dp"
             android:layout_weight="200"
             android:background="@color/colorPrimary"
-            android:text="Comment"
+            android:text="Feedback"
             android:textColor="@color/white" />
 
         <Button
