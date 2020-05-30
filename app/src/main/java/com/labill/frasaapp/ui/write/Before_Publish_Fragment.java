@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,8 +25,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.ui.home.HomeFragment;
+import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Before_Publish_Fragment extends Fragment {
 
@@ -35,7 +49,11 @@ public class Before_Publish_Fragment extends Fragment {
     Float[] xPos;
     Float[] yPos;
     Button publish;
+    private String id, idStory;
     private BeforePublishViewModel mViewModel;
+
+    private FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     public static Before_Publish_Fragment newInstance() {
         return new Before_Publish_Fragment();
@@ -70,6 +88,8 @@ public class Before_Publish_Fragment extends Fragment {
         publish = view.findViewById(R.id.publish_button);
         text.setText(isi);
         title.setText(title2);
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
         int height1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
         int width1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
 
@@ -106,6 +126,66 @@ public class Before_Publish_Fragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity(),"Yay! Your Story\nHas Been Published!", Toast.LENGTH_SHORT).show();
                 //buat save ke firebase
+                id = mAuth.getCurrentUser().getUid();
+                DocumentReference documentReference = db.collection("stories").document();
+                Map<String, Object> newStory = new HashMap<>();
+                newStory.put("author", id);
+                newStory.put("color", color);
+                newStory.put("content", isi);
+                newStory.put("genre", genre);
+                newStory.put("photo", image);
+                newStory.put("title", title2);
+
+                documentReference.set(newStory).addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("storyadded", "addded");
+                    }
+                });
+
+                //Retrieve Story Id
+                com.google.firebase.firestore.Query loadStory = db.collection("stories").
+                        whereEqualTo("title", title2);
+
+                // Image
+                loadStory.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                        for (DocumentChange doc : documentSnapshots.getDocumentChanges()){
+
+                            if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                                idStory = doc.getDocument().getId();
+                            }
+                            else
+                            {
+                                Log.d("ini", "gagal");
+                            }
+                        }
+
+                    }
+                });
+
+                DocumentReference stickerRef = db.collection("stickers").document();
+
+                for(int i=0; i<TotalStickers; i++)
+                {
+                    Map<String, Object> newSticker = new HashMap<>();
+                    newSticker.put("story", idStory);
+                    newSticker.put("sticker", stickers[i]);
+                    newSticker.put("xPos", xPos[i]);
+                    newSticker.put("yPos", yPos[i]);
+
+                    stickerRef.set(newSticker).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d("stickeradded", "addded");
+                        }
+                    });
+                }
+
+
+
 
 
                 //ini buat pindah ke home

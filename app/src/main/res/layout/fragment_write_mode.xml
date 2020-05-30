@@ -29,7 +29,7 @@
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:gravity="top"
-        android:text="@string/preview"
+        android:text="Previous"
         android:textAppearance="@style/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.093"
