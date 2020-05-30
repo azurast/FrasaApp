@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/write2"
+    android:id="@+id/bpublish"
     android:background="#FFFFFF"
-    tools:context=".ui.write.WriteFragment">
+    tools:context=".ui.write.Before_Publish_Fragment">
 
 
     <View
@@ -31,8 +31,8 @@
         android:layout_height="match_parent"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="30dp"
-        android:layout_marginBottom="60dp"
         android:layout_marginRight="50dp"
+        android:layout_marginBottom="60dp"
         android:foregroundGravity="top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <ImageView
                 android:id="@+id/cover"
                 android:layout_width="312dp"
@@ -69,83 +70,19 @@
                 android:textAppearance="@style/start_writi" />
         </LinearLayout>
     </ScrollView>
-    <TextView
-        android:id="@+id/next"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginTop="16dp"
-        android:gravity="top"
-        android:text="@string/next"
-        android:clickable="true"
-        android:textAppearance="@style/next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.903"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/preview"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:gravity="top"
-        android:text="@string/preview"
-        android:textAppearance="@style/next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.093"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <Button
+        android:id="@+id/publish_button"
+        android:layout_width="142dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:background="@drawable/group_3"
+        android:gravity="center"
+        android:text="Publish"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <FrameLayout
-            android:id="@+id/frag"
-            android:layout_width="match_parent"
-            android:layout_height="300dp" />
-
-        <LinearLayout
-            android:id="@+id/tab2"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#F9F9F9">
-
-            // Stickers
-
-            <TextView
-                android:layout_weight="1"
-                android:id="@+id/stickers"
-                android:textStyle="bold"
-                android:clickable="true"
-                android:textAppearance="@style/colors"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="STICKERS" />
-
-            // Frame color
-
-            <TextView
-                android:layout_weight="1"
-                android:clickable="true"
-                android:textAppearance="@style/colors"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:id="@+id/color"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="COLOR" />
-        </LinearLayout>
-    </LinearLayout>
-
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
