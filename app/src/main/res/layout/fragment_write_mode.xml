@@ -23,20 +23,6 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="21dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:gravity="top"
-        android:text="Save"
-        android:textAppearance="@style/next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.699"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/preview"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
