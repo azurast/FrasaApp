@@ -55,23 +55,26 @@
         android:layout_width="wrap_content"
         android:layout_height="33dp"
         android:layout_marginTop="64dp"
+        android:layout_marginLeft="50dp"
         android:gravity="top"
         android:text="Title"
         android:textAppearance="@style/choose_layo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/write_input"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_marginLeft="33dp"
-        android:layout_marginTop="12dp"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="55dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="120dp"
         android:scrollbars="vertical"
-        android:layout_marginRight="33dp"
+        android:layout_marginRight="50dp"
         android:gravity="top"
+        android:inputType="textMultiLine"
         android:textAppearance="@style/start_writi"
         android:lineHeight="14sp"
         android:hint="Start writing here..."
@@ -81,5 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/choose_layo"
         app:layout_constraintVertical_bias="0.024" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 
