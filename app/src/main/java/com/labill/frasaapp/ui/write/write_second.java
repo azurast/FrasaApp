@@ -62,7 +62,7 @@ public class write_second extends Fragment implements View.OnDragListener {
     private FrameLayout frag;
     ConstraintLayout colorLayout;
     int defaultColor;
-    int color;
+    int color1 = 0;
 
     Bundle args;
 
@@ -81,9 +81,7 @@ public class write_second extends Fragment implements View.OnDragListener {
         final String genre  = getArguments().getString("genre");
         final String title  = getArguments().getString("title");
         String image  = getArguments().getString("image");
-        Log.i("test3", image);
-        Log.i("test2", genre);
-        Log.i("test", title);
+
 
         args = new Bundle();
         prev = view.findViewById(R.id.preview);
@@ -96,7 +94,6 @@ public class write_second extends Fragment implements View.OnDragListener {
         title3 = view.findViewById(R.id.title2);
         title3.setText(title);
         frag = view.findViewById(R.id.frag);
-        color = 0;
 
         FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -158,7 +155,7 @@ public class write_second extends Fragment implements View.OnDragListener {
                 args.putString("title", title);
                 args.putString("genre", genre);
                 args.putString("image", finalImage);
-                args.putInt("color", color);
+                args.putInt("color", color1);
                 fragment.setArguments(args);
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -181,6 +178,7 @@ public class write_second extends Fragment implements View.OnDragListener {
 
                     @Override
                     public void onOk(AmbilWarnaDialog dialog, int color) {
+                        color1 = color;
                         colorLayout.setBackgroundColor(color);
                     }
                 });
