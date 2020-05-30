@@ -1,22 +1,16 @@
 package com.labill.frasaapp;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.Image;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -25,26 +19,26 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import de.hdodenhof.circleimageview.CircleImageView;
+import javax.annotation.Nullable;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class UserListAdapter extends RecyclerView.Adapter{
 
@@ -57,6 +51,14 @@ public class UserListAdapter extends RecyclerView.Adapter{
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
     StorageReference references;
+
+//    Map<String, Object> totalFollower;
+//    Map<String, Object> totalUser;
+
+    List<Map> totalUser;
+    List<Map> totalFollower;
+
+    QueryDocumentSnapshot totalU;
 
     public UserListAdapter(List<User> userList, OnItemClickListener onItemClickListener){
         this.userList = userList;
@@ -83,7 +85,7 @@ public class UserListAdapter extends RecyclerView.Adapter{
     // Check if user is following that person
     private void isFollowing(final String userId, final Button followBtn){
 
-        Log.d(TAG, "final user id : "+userId);
+        //Log.d(TAG, "final user id : "+userId);
         //DatabaseReference isFollowRef = FirebaseDatabase.getInstance().getReference().child("users").child(mAuth.getUid()).child("following");
         DocumentReference followingReference = firebaseFirestore.collection("users").document(mAuth.getUid());
         followingReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -144,11 +146,39 @@ public class UserListAdapter extends RecyclerView.Adapter{
             userName.setText(user.getName());
             btnFollowing.setVisibility(View.VISIBLE);
 
+            totalUser = new ArrayList();
+            totalFollower = new ArrayList();
             isFollowing(user.getId(), btnFollowing);
 
             if(user.getId().equals(firebaseUser.getUid())) {
                 btnFollowing.setVisibility(View.GONE);
             }
+
+            firebaseFirestore.collection("users").addSnapshotListener(new EventListener<QuerySnapshot>() {
+                @Override
+                public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                    if(e != null){
+                        Log.d(TAG, "Error : "+ e.getMessage());
+                    }else{
+                        totalUser.clear();
+                        totalFollower.clear();
+                        for(QueryDocumentSnapshot doc : queryDocumentSnapshots){
+                            if(doc.getId().equals(firebaseUser.getUid())){
+                                Map<String, Object> tempUser = (Map<String, Object>) doc.get("total");
+                                totalUser.add(tempUser);
+                                Log.d(TAG, "total user:"+totalUser);
+                            }else if(doc.getId().equals(user.getId())){
+                                Map<String, Object> tempFollower = (Map<String, Object>) doc.get("total");
+                                totalFollower.add(tempFollower);
+                                Log.d(TAG, "total follower:"+totalFollower);
+                            }
+                        }
+                    }
+                    //Log.d(TAG, "total list :"+totalList);
+                    //totalList.add((Map) doc.get("total"));
+                }
+            });
+
 
             //When following button is clicked
             btnFollowing.setOnClickListener(new View.OnClickListener() {
@@ -162,14 +192,25 @@ public class UserListAdapter extends RecyclerView.Adapter{
                     // Punya follower
                     final DocumentReference followerRef = firebaseFirestore.collection("users").document(user.getId());
 
+                    // User
+                    long uFollowing = (long) totalUser.get(0).get("following");
+                    // Follower
+                    long fFollowers =  (long) totalUser.get(0).get("followers");
+
+                    Log.d(TAG, "uFollowing"+uFollowing);
+                    Log.d(TAG, "fFollowers"+fFollowers);
+
                     // Belum di follow, mau follow
                     if(btnFollowing.getText().toString().equalsIgnoreCase("Follow")){
                         Log.d(TAG, "tulisan di button "+btnFollowing.getText().toString());
                         Log.d(TAG, "btn tulisan follow");
 
+                        uFollowing++;
+                        fFollowers++;
+
                         // tambah
-                        userRef.update("total.following", 1);
-                        followerRef.update("total.followers", 1);
+                        userRef.update("total.following", uFollowing);
+                        followerRef.update("total.followers", fFollowers);
 
                         userRef.update("following."+user.getId(), true);
                         followerRef.update("followers."+firebaseUser.getUid(), true);
@@ -183,9 +224,20 @@ public class UserListAdapter extends RecyclerView.Adapter{
                         Log.d(TAG, "tulisan di button "+btnFollowing.getText().toString());
                         Log.d(TAG, "btn tulisan following");
 
+                        uFollowing--;
+                        fFollowers--;
+
+                        if(uFollowing<=0){
+                            uFollowing = 0;
+                        }
+
+                        if(fFollowers<=0){
+                            fFollowers =0;
+                        }
+
                         // hapus
-                        userRef.update("total.following", 1);
-                        followerRef.update("total.followers", 1);
+                        userRef.update("total.following", uFollowing);
+                        followerRef.update("total.followers", fFollowers);
 
                         userRef.update("following."+user.getId(), FieldValue.delete());
                         followerRef.update("followers."+firebaseUser.getUid(), FieldValue.delete());
