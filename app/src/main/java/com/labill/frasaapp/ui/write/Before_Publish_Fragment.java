@@ -100,6 +100,7 @@ public class Before_Publish_Fragment extends Fragment {
             imageView.setId(View.generateViewId());
             Bitmap convert1 = stringToBitmap(stickers[i]);
             imageView.setImageBitmap(convert1);
+//        imageView.animate().translationX(xPos[0]).translationY(yPos[0]).setDuration(0).start();
             imageView.setX(xPos[i]);
             imageView.setY(yPos[i]);
             container1.addView(imageView);
@@ -114,10 +115,10 @@ public class Before_Publish_Fragment extends Fragment {
             Bitmap pic = stringToBitmap(image);
             cover.setImageBitmap(pic);
             int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
-            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 312, getResources().getDisplayMetrics());
+            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
             cover.getLayoutParams().height = height;
             cover.getLayoutParams().width = width;
-            cover.setScaleType(ImageView.ScaleType.FIT_XY);
+            cover.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
         publish.setOnClickListener(new View.OnClickListener() {
@@ -142,35 +143,12 @@ public class Before_Publish_Fragment extends Fragment {
                     }
                 });
 
-                //Retrieve Story Id
-                com.google.firebase.firestore.Query loadStory = db.collection("stories").
-                        whereEqualTo("title", title2);
-
-                // Image
-                loadStory.addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
-                        for (DocumentChange doc : documentSnapshots.getDocumentChanges()){
-
-                            if (doc.getType() == DocumentChange.Type.ADDED) {
-
-                                idStory = doc.getDocument().getId();
-                            }
-                            else
-                            {
-                                Log.d("ini", "gagal");
-                            }
-                        }
-
-                    }
-                });
-
                 DocumentReference stickerRef = db.collection("stickers").document();
 
                 for(int i=0; i<TotalStickers; i++)
                 {
                     Map<String, Object> newSticker = new HashMap<>();
-                    newSticker.put("story", idStory);
+                    newSticker.put("story", title2);
                     newSticker.put("sticker", stickers[i]);
                     newSticker.put("xPos", xPos[i]);
                     newSticker.put("yPos", yPos[i]);

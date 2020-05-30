@@ -141,10 +141,10 @@ public class WriteFragment extends Fragment {
             Log.d("test","ini cuma test lagi lagi");
             upload.setImageURI(imageUri);
             int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
-            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 312, getResources().getDisplayMetrics());
+            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics());
             upload.getLayoutParams().height = height;
             upload.getLayoutParams().width = width;
-            upload.setScaleType(ImageView.ScaleType.FIT_XY);
+            upload.setScaleType(ImageView.ScaleType.CENTER_CROP);
             data.setData(null);
         }
     }

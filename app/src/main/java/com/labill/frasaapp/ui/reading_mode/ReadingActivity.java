@@ -2,12 +2,17 @@ package com.labill.frasaapp.ui.reading_mode;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -34,6 +41,8 @@ import com.squareup.picasso.Picasso;
 
 import javax.annotation.Nullable;
 
+import static java.lang.Integer.valueOf;
+
 public class ReadingActivity extends AppCompatActivity {
 
     private static final String TAG = "ReadingActivityLog";
@@ -43,10 +52,12 @@ public class ReadingActivity extends AppCompatActivity {
     private boolean processLike = false;
     private boolean processBookmark = false;
     private DatabaseReference databaseLike, databaseBookmark;
+    ConstraintLayout colorLayout;
 
     private TextView tvTitle, tvAuthor, tvContent, numOfLike;
     private ImageView storyImg;
-    private String idStory, idAuthor;
+    private String idStory, idAuthor, photo;
+    private Integer color;
     private Button buttComment, buttLike, buttBookmark;
 
     @Override
@@ -62,6 +73,7 @@ public class ReadingActivity extends AppCompatActivity {
         databaseBookmark = FirebaseDatabase.getInstance().getReference().child("bookmarks");
         //databaseBookmark.keepSynced(true);
 
+        colorLayout = findViewById(R.id.border);
         tvTitle = findViewById(R.id.tvPostTitle);
         tvAuthor = findViewById(R.id.tvPostAuthor);
         tvContent = findViewById(R.id.tvPostContent);
@@ -81,6 +93,8 @@ public class ReadingActivity extends AppCompatActivity {
         tvTitle.setText(recvTitle);
         tvAuthor.setText(recvAuthor);
         tvContent.setText(recvContent);
+
+        Log.d("title",tvTitle.getText().toString());
 
         //Retrieve author's id
         Query loadAuthor = firebaseFirestore.collection("users").
@@ -119,14 +133,16 @@ public class ReadingActivity extends AppCompatActivity {
 
                         idStory = doc.getDocument().getId();
                         Log.d("cekkkkk", idStory);
-                        StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
 
-                        storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                            @Override
-                            public void onSuccess(Uri uri) {
-                                Picasso.get().load(uri).into(storyImg);
-                            }
-                        });
+
+//                        StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
+//
+//                        storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                            @Override
+//                            public void onSuccess(Uri uri) {
+//                                Picasso.get().load(uri).into(storyImg);
+//                            }
+//                        });
                     }
                     else
                     {
@@ -134,6 +150,34 @@ public class ReadingActivity extends AppCompatActivity {
                     }
                 }
 
+            }
+        });
+
+        DocumentReference docRef = firebaseFirestore.collection("stories").document(idStory);
+
+        docRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                color = valueOf(documentSnapshot.getString("color"));
+                Log.d("colorBorder", color.toString());
+                photo = documentSnapshot.getString("photo");
+
+                if(photo == "") {
+
+                }else{
+                    Bitmap pic = stringToBitmap(photo);
+                    storyImg.setImageBitmap(pic);
+                    int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
+                    int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
+                    storyImg.getLayoutParams().height = height;
+                    storyImg.getLayoutParams().width = width;
+                    storyImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                }
+
+                if(color!=0)
+                {
+                    colorLayout.setBackgroundColor(color);
+                }
             }
         });
 
@@ -293,5 +337,10 @@ public class ReadingActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public final static Bitmap stringToBitmap(String in){
+        byte[] bytes = Base64.decode(in, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }
