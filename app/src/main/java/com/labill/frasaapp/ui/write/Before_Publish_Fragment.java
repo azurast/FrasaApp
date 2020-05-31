@@ -148,7 +148,7 @@ public class Before_Publish_Fragment extends Fragment {
                     DocumentReference stickerRef = db.collection("stickers").document();
 
                     Map<String, Object> newSticker = new HashMap<>();
-                    newSticker.put("story", title2);
+                    newSticker.put("atitle", title2);
                     newSticker.put("sticker", stickers[i]);
                     newSticker.put("xPos", xPos[i]);
                     newSticker.put("yPos", yPos[i]);
@@ -166,12 +166,12 @@ public class Before_Publish_Fragment extends Fragment {
 
 
                 //ini buat pindah ke home
-                HomeFragment fragment = new HomeFragment();
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.replace(R.id.bpublish, fragment);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+//                HomeFragment fragment = new HomeFragment();
+//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//                fragmentTransaction.replace(R.id.bpublish, fragment);
+//                fragmentTransaction.addToBackStack(null);
+//                fragmentTransaction.commit();
             }
         });
         return view;

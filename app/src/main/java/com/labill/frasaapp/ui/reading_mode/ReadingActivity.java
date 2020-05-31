@@ -48,7 +48,7 @@ public class ReadingActivity extends AppCompatActivity {
     private DatabaseReference databaseLike, databaseBookmark;
     ConstraintLayout colorLayout;
 
-    private TextView tvTitle, tvAuthor, tvContent, numOfLike;
+    private TextView tvTitle, tvAuthor, tvContent, tvGenre, numOfLike;
     private ImageView storyImg;
     private String idStory, idAuthor, photo;
     private Integer color;
@@ -71,6 +71,7 @@ public class ReadingActivity extends AppCompatActivity {
         tvTitle = findViewById(R.id.tvPostTitle);
         tvAuthor = findViewById(R.id.tvPostAuthor);
         tvContent = findViewById(R.id.tvPostContent);
+        tvGenre = findViewById(R.id.tvGenre);
         storyImg = findViewById(R.id.imageView2);
         buttComment = findViewById(R.id.buttComment);
         buttLike = findViewById(R.id.buttLike);
@@ -85,10 +86,42 @@ public class ReadingActivity extends AppCompatActivity {
         //String img = onClickIntent.getStringExtra("photo");
 
         tvTitle.setText(recvTitle);
+        Log.d("tvtitle", tvTitle.getText().toString());
         tvAuthor.setText(recvAuthor);
         tvContent.setText(recvContent);
 
-        fetchSticker(recvTitle);
+        //fetch sticker
+        com.google.firebase.firestore.Query loadSticker = firebaseFirestore.collection("stickers").
+                whereEqualTo("atitle", recvTitle);
+
+        loadSticker.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                    String stickers = doc.getDocument().get("sticker").toString();
+                    float xPos = Float.parseFloat(doc.getDocument().get("xPos").toString());
+                    float yPos = Float.parseFloat(doc.getDocument().get("yPos").toString());
+
+                    int height1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+                    int width1 = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+
+                    ConstraintLayout container1 = (ConstraintLayout) findViewById(R.id.border);
+
+                    ImageView imageView = new ImageView(ReadingActivity.this);
+                    imageView.setId(View.generateViewId());
+                    Bitmap convert1 = stringToBitmap(stickers);
+                    imageView.setImageBitmap(convert1);
+                    imageView.setX(xPos);
+                    imageView.setY(yPos);
+                    container1.addView(imageView);
+                    imageView.getLayoutParams().width = width1;
+                    imageView.getLayoutParams().height = height1;
+                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                }
+
+            }
+        });
 
         //Retrieve author's id
         Query loadAuthor = firebaseFirestore.collection("users").
@@ -146,15 +179,6 @@ public class ReadingActivity extends AppCompatActivity {
 
                         Integer color = valueOf(doc.getDocument().get("color").toString());
                         colorLayout.setBackgroundColor(color);
-
-//                        StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
-//
-//                        storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-//                            @Override
-//                            public void onSuccess(Uri uri) {
-//                                Picasso.get().load(uri).into(storyImg);
-//                            }
-//                        });
                     }
                     else
                     {
@@ -319,32 +343,6 @@ public class ReadingActivity extends AppCompatActivity {
                 Intent intent = new Intent(ReadingActivity.this, CommentActivity.class);
                 intent.putExtra("id", idStory);
                 startActivity(intent);
-            }
-        });
-
-    }
-
-    public void fetchSticker (String recvTitle) {
-        //fetch sticker
-        com.google.firebase.firestore.Query loadSticker = firebaseFirestore.collection("stickers").
-                whereEqualTo("title", recvTitle);
-
-        loadSticker.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
-
-                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
-                    Log.d("sticker", "sss");
-                    if (doc.getType() == DocumentChange.Type.ADDED) {
-
-                        String idSticker = doc.getDocument().getId();
-                        Log.d("sticker", idSticker);
-
-                    } else {
-                        Log.d("ini", "gagal");
-                    }
-                }
-
             }
         });
 

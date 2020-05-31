@@ -150,10 +150,8 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                         if (doc.getType() == DocumentChange.Type.ADDED){
 
                             idStory = doc.getDocument().getId();
-                            Log.d(postTitle.getText().toString(), idStory);
 
-                            String img = doc.getDocument().get("photo").toString();
-                            Log.d("photo",img);
+                            String img = doc.getDocument().get("photo").toString();;
 
                             if(img == "") {
 
@@ -162,8 +160,8 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                                 postImage.setImageBitmap(pic);
 //                                int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
 //                                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
-                                postImage.getLayoutParams().height = 200;
-                                postImage.getLayoutParams().width = 355;
+                                postImage.getLayoutParams().height = 400;
+                                postImage.getLayoutParams().width = 900;
                                 postImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
                             }
 //                            StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
