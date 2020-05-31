@@ -127,8 +127,11 @@ public class SignUpActivity extends AppCompatActivity {
                                                         newuser.put("name", name);
                                                         newuser.put("email", email);
                                                         newuser.put("bio", "Hello, enjoy my stories");
-                                                        newuser.put("follow", null);
-                                                        newuser.put("bookmark", null);
+                                                      newuser.put("following", "aa");
+                                                        newuser.put("followers", null);
+//                                                        newuser.put("bookmark", null);
+                                                        //newuser.put("stories", null);
+                                                        newuser.put("total", null);
                                                         newuser.put("photo", "user.jpg");
                                                         documentReference.set(newuser).addOnSuccessListener(new OnSuccessListener<Void>() {
                                                             @Override
@@ -136,6 +139,13 @@ public class SignUpActivity extends AppCompatActivity {
                                                                 Log.d("l", "addded");
                                                             }
                                                         });
+
+                                                        Map<String, Object> total = new HashMap<>();
+                                                        total.put("followers", 0);
+                                                        total.put("following", 0);
+                                                        total.put("stories", 0);
+
+                                                        documentReference.collection("total").add(total);
 
                                                         updateUI(user);
 
