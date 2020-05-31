@@ -39,6 +39,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StoriesListAdapter extends RecyclerView.Adapter implements Filterable {
 
+    private static final String TAG = "StoriesListAdapterLog";
     private OnItemClickListener listener;
     private FirebaseFirestore firebaseFirestore;
 
@@ -77,6 +78,7 @@ public class StoriesListAdapter extends RecyclerView.Adapter implements Filterab
 
     @Override
     public Filter getFilter() {
+        Log.d(TAG, "stories filter "+storiesFilter.toString());
         return storiesFilter;
     }
 
@@ -85,10 +87,17 @@ public class StoriesListAdapter extends RecyclerView.Adapter implements Filterab
         protected FilterResults performFiltering(CharSequence constraint) {
             List<Stories> filteredList = new ArrayList<>();
             if(constraint == null || constraint.length() == 0){
+                Log.d(TAG, "constraint null");
                 filteredList.addAll(storiesListFull);
             }else{
+                Log.d(TAG, "constraint not null");
                 String filterPattern = constraint.toString().toLowerCase().trim();
+                Log.d(TAG, "filter pattern "+filterPattern);
+                storiesListFull = new ArrayList<>(storiesList);
+                Log.d(TAG, "stories list full"+ storiesListFull.toString());
                 for(Stories story: storiesListFull){
+                    Log.d(TAG, "story :"+story.getTitle());
+                    Log.d(TAG,"story title :"+story.getTitle().toLowerCase());
                     if(story.getTitle().toLowerCase().contains(filterPattern)){
                         filteredList.add(story);
                     }

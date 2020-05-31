@@ -131,6 +131,8 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                Log.d(TAG, "newText : "+newText);
+                //Log.d(TAG, "cek dlm line : "+storiesListAdapter.getFilter().filter(newText));
                 storiesListAdapter.getFilter().filter(newText);
                 Log.d(TAG, "onQueryTexChange");
                 return true;
