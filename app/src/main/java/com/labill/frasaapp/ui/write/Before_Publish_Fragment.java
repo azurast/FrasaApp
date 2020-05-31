@@ -106,7 +106,7 @@ public class Before_Publish_Fragment extends Fragment {
             container1.addView(imageView);
             imageView.getLayoutParams().width = width1;
             imageView.getLayoutParams().height = height1;
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
 
         if(image == "") {
@@ -166,12 +166,12 @@ public class Before_Publish_Fragment extends Fragment {
 
 
                 //ini buat pindah ke home
-//                HomeFragment fragment = new HomeFragment();
-//                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-//                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//                fragmentTransaction.replace(R.id.bpublish, fragment);
-//                fragmentTransaction.addToBackStack(null);
-//                fragmentTransaction.commit();
+                HomeFragment fragment = new HomeFragment();
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.bpublish, fragment);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
             }
         });
         return view;

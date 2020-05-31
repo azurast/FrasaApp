@@ -117,7 +117,7 @@ public class ReadingActivity extends AppCompatActivity {
                     container1.addView(imageView);
                     imageView.getLayoutParams().width = width1;
                     imageView.getLayoutParams().height = height1;
-                    imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+                    imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
                 }
 
             }
