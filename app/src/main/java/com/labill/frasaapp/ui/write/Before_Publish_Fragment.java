@@ -134,7 +134,7 @@ public class Before_Publish_Fragment extends Fragment {
                 newStory.put("content", isi);
                 newStory.put("genre", genre);
                 newStory.put("photo", image);
-                newStory.put("title", title2);
+                newStory.put("atitle", title2);
 
                 documentReference.set(newStory).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
