@@ -21,6 +21,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.labill.frasaapp.CommentListAdapter;
 import com.labill.frasaapp.Comments;
 import com.labill.frasaapp.R;
@@ -41,8 +46,10 @@ public class CommentActivity extends AppCompatActivity {
     private EditText comment;
     private String idStory;
     private RecyclerView recyclerView;
+    FirebaseFirestore db;
     private CommentListAdapter commentListAdapter;
     private List<Comments> commentsList;
+    String temp = "User";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +66,11 @@ public class CommentActivity extends AppCompatActivity {
         comment = findViewById(R.id.cc);
 
         mAuth = FirebaseAuth.getInstance();
-        databaseComment = FirebaseDatabase.getInstance().getReference().child("comments");
+        databaseComment = FirebaseDatabase.getInstance().getReference().child("comments").child(idStory);
+        db = FirebaseFirestore.getInstance();
 
 
-        databaseComment.addValueEventListener(new ValueEventListener() {
+        databaseComment.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Log.d(TAG, "data snapshot :"+dataSnapshot.getValue());
@@ -74,13 +82,18 @@ public class CommentActivity extends AppCompatActivity {
 
                     Comments c = new Comments();
                     c.setIdStory(ds.getKey());
-                    Map tempMap = (Map) ds.getValue();
-                    for(Object id : tempMap.keySet()){
-                        c.setIdAuthor(id.toString());
-                    }
-                    for(Object comment : tempMap.values()){
-                        c.setComment(comment.toString());
-                    }
+//                    Map tempMap = (Map) ds.getValue();
+//                    for(Object id : tempMap.keySet()){
+
+                    c.setIdAuthor(ds.getKey());
+                    c.setComment(ds.getValue().toString());
+
+
+                   // c.setIdAuthor(ds.getKey());
+//                    }
+//                    for(Object comment : tempMap.values()){
+
+                   // }
 
                     Log.d(TAG, "comment content "+c.getComment());
                     Log.d(TAG, "comment author "+c.getIdAuthor());
@@ -113,7 +126,7 @@ public class CommentActivity extends AppCompatActivity {
                     databaseComment.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            databaseComment.child(idStory).child(mAuth.getCurrentUser().getUid()).setValue(comment.getText().toString());
+                            databaseComment.child(mAuth.getCurrentUser().getUid()).setValue(comment.getText().toString());
                             Toast.makeText(CommentActivity.this, "Feedback posted", Toast.LENGTH_SHORT).show();
                         }
 

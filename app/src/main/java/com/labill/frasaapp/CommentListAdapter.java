@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,13 +32,13 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.labill.frasaapp.ui.reading_mode.CommentActivity;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Comment;
 
 import java.util.List;
-
-import javax.annotation.Nullable;
+import java.util.concurrent.Executor;
 
 
 public class CommentListAdapter extends RecyclerView.Adapter {
@@ -88,7 +89,38 @@ public class CommentListAdapter extends RecyclerView.Adapter {
             String idAuthor = comment.getIdAuthor();
             String content = comment.getComment();
 
-            commenter.setText(idAuthor);
+            firebaseFirestore = FirebaseFirestore.getInstance();
+
+
+            DocumentReference documentReference = firebaseFirestore.collection("users").document(idAuthor);
+
+            documentReference.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if(task.isSuccessful()){
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            // Log.d(TAG, "DocumentSnapshot data: " + document.getData());
+                            commenter.setText(document.getString("name"));
+                        } else {
+                            //Log.d(TAG, "No such document");
+                        }
+                    } else {
+                        //Log.d(TAG, "get failed with ", task.getException());
+                    }
+                }
+            });
+
+//            documentReference.addSnapshotListener((Executor) CommentListAdapter.this, new EventListener<DocumentSnapshot>()
+//            {
+//                @Override
+//                public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+//                    commenter.setText(documentSnapshot.getString("name"));
+//                    Log.d("commenter", documentSnapshot.getString("name"));
+//                }
+//            });
+
+            //commenter.setText(idAuthor);
             commentContent.setText(content);
 
         }
