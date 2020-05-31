@@ -69,8 +69,8 @@ public class SettingFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
-    FirebaseFirestore db;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
     FirebaseUser user;
     StorageReference references;
 

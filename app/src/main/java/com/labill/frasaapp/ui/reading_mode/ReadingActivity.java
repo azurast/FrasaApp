@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.R;
+import com.labill.frasaapp.ui.profile.Profile2Activity;
 import com.labill.frasaapp.ui.profile.SeeProfile;
 
 import javax.annotation.Nullable;
@@ -78,6 +79,40 @@ public class ReadingActivity extends AppCompatActivity {
         buttBookmark = findViewById(R.id.buttBookmark);
         numOfLike = findViewById(R.id.numOfLike);
 
+
+
+
+        //klik nama pengarang
+        tvAuthor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(idAuthor.equals(mAuth.getCurrentUser().getUid()))
+                {
+                    Intent intent = new Intent(ReadingActivity.this, Profile2Activity.class);
+                    startActivity(intent);
+                }
+                else {
+                    Intent intent = new Intent(ReadingActivity.this, SeeProfile.class);
+                    intent.putExtra("id", idAuthor);
+                    startActivity(intent);
+                }
+            }
+        });
+
+        buttComment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ReadingActivity.this, CommentActivity.class);
+                intent.putExtra("id", idStory);
+                startActivity(intent);
+            }
+        });
+
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
 
         Intent onClickIntent = getIntent();
         String recvTitle = onClickIntent.getStringExtra("title");
@@ -326,26 +361,6 @@ public class ReadingActivity extends AppCompatActivity {
                 }
             }
         });
-
-        //klik nama pengarang
-        tvAuthor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ReadingActivity.this, SeeProfile.class);
-                intent.putExtra("id", idAuthor);
-                startActivity(intent);
-            }
-        });
-
-        buttComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ReadingActivity.this, CommentActivity.class);
-                intent.putExtra("id", idStory);
-                startActivity(intent);
-            }
-        });
-
     }
 
     public final static Bitmap stringToBitmap(String in){

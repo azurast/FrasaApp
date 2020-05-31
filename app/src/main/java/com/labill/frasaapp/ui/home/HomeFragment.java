@@ -2,15 +2,18 @@ package com.labill.frasaapp.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.SearchView;
 
 import androidx.annotation.NonNull;
@@ -44,6 +47,8 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Integer.valueOf;
 
 public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemClickListener {
 
@@ -165,6 +170,7 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
         storiesList.get(position);
         String title = storiesList.get(position).getTitle();
         references = FirebaseStorage.getInstance().getReference();
+
 
         Intent intent = new Intent(getActivity(), ReadingActivity.class);
         // kurang pass photo

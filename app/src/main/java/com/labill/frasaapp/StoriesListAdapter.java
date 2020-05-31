@@ -74,8 +74,6 @@ public class StoriesListAdapter extends RecyclerView.Adapter implements Filterab
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ListViewHolder) holder).bindView(position);
-
-        //isLike(storiesList.get().toString());
     }
 
     @Override
