@@ -38,6 +38,7 @@ import com.labill.frasaapp.MainActivity;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.Stories;
 import com.labill.frasaapp.StoriesListAdapter;
+import com.labill.frasaapp.UserListAdapter;
 import com.labill.frasaapp.ui.reading_mode.ReadingActivity;
 import com.squareup.picasso.Picasso;
 
@@ -115,24 +116,28 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
         inflater.inflate(R.menu.search_menu, menu);
         MenuItem searchItem = menu.findItem(R.id.action_search);
         searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        SearchView searchView = (SearchView) searchItem.getActionView();
+        final SearchView searchView = (SearchView) searchItem.getActionView();
         Log.d(TAG, "search view created");
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                return false;
-//            }
-//        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Log.d(TAG, "onQueryTexSubmit");
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d(TAG, "newText : "+newText);
+                //Log.d(TAG, "cek dlm line : "+storiesListAdapter.getFilter().filter(newText));
+                storiesListAdapter.getFilter().filter(newText);
+                Log.d(TAG, "onQueryTexChange");
+                return true;
+            }
+        });
     }
 
     private void searchStories (String s){

@@ -6,6 +6,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -47,7 +48,9 @@ import com.labill.frasaapp.R;
 import com.labill.frasaapp.ui.login_and_signup.SignUpActivity;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -59,11 +62,13 @@ import java.util.Map;
  * create an instance of this fragment.
  */
 public class SettingFragment extends Fragment {
+
+    private static final String TAG = "SettingFragmentLog";
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 1888;
     FirebaseFirestore db;
     FirebaseAuth mAuth;
     FirebaseUser user;
@@ -79,6 +84,9 @@ public class SettingFragment extends Fragment {
     private String id, defBio;
     String currentPhotoPath;
     private Uri imageUri;
+    int count = 0;
+
+    DocumentReference documentReference;
 
     public SettingFragment() {
         // Required empty public constructor
@@ -123,7 +131,7 @@ public class SettingFragment extends Fragment {
 
         StorageReference profileRef = references.child("users/"+id+"/user.jpg");
 
-        final DocumentReference documentReference = db.collection("users").document(id);
+        documentReference = db.collection("users").document(id);
 
         documentReference.addSnapshotListener(getActivity(), new EventListener<DocumentSnapshot>()
         {
@@ -159,6 +167,14 @@ public class SettingFragment extends Fragment {
                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 Log.d("uri",MediaStore.Images.Media.EXTERNAL_CONTENT_URI.toString());
                 startActivityForResult(openGalleryIntent, 1000);
+            }
+        });
+
+        changepp2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(takePictureIntent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -219,6 +235,20 @@ public class SettingFragment extends Fragment {
 
                 uploadImageToFirebase(imgUri);
             }
+        }else if(requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE){
+            Bitmap bmp = (Bitmap) data.getExtras().get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
+                    byteArray.length);
+
+            String path = MediaStore.Images.Media.insertImage(getContext().getContentResolver(), bitmap, "FrasaPP"+count, null);
+
+            pp.setImageBitmap(bitmap);
+            uploadImageToFirebase(Uri.parse(path));
         }
 
         if(data!=null)
@@ -247,8 +277,10 @@ public class SettingFragment extends Fragment {
     }
 
     private void uploadImageToFirebase(Uri imgUri) {
+
         //upload
         final StorageReference fileRef = references.child("users/"+id+"/user.jpg");
+        Log.d(TAG, "fileref :"+fileRef);
         fileRef.putFile(imgUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
