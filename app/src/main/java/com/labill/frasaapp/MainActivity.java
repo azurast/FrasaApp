@@ -173,29 +173,29 @@ public class MainActivity extends AppCompatActivity implements UserListAdapter.O
     // Remove 3 dot
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.search_menu, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        final SearchView searchView = (SearchView) searchItem.getActionView();
-        Log.d(TAG, "search view created");
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.search_menu, menu);
+//        MenuItem searchItem = menu.findItem(R.id.action_search);
+//        searchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        final SearchView searchView = (SearchView) searchItem.getActionView();
+//        Log.d(TAG, "search view created");
+//
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                Log.d(TAG, "onQueryTexSubmit");
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                adapter.getFilter().filter(newText);
+//                Log.d(TAG, "onQueryTexChange");
+//                return true;
+//            }
+//        });
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Log.d(TAG, "onQueryTexSubmit");
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                Log.d(TAG, "onQueryTexChange");
-                return true;
-            }
-        });
-
-        return true;
+        return false;
     }
 
     @Override

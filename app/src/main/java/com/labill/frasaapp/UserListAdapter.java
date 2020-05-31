@@ -55,9 +55,6 @@ public class UserListAdapter extends RecyclerView.Adapter implements Filterable 
     private FirebaseAuth mAuth;
     StorageReference references;
 
-//    Map<String, Object> totalFollower;
-//    Map<String, Object> totalUser;
-
     List<Map> totalUser;
     List<Map> totalFollower;
 
