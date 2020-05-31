@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
@@ -40,13 +43,13 @@ import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class UserListAdapter extends RecyclerView.Adapter{
+public class UserListAdapter extends RecyclerView.Adapter implements Filterable {
 
     private static final String TAG = "UserAdapterLog";
 
     private OnItemClickListener listener;
     private List<User> userList;
-
+    private List<User> userListFull;
     private FirebaseFirestore firebaseFirestore;
     private FirebaseUser firebaseUser;
     private FirebaseAuth mAuth;
@@ -62,6 +65,7 @@ public class UserListAdapter extends RecyclerView.Adapter{
 
     public UserListAdapter(List<User> userList, OnItemClickListener onItemClickListener){
         this.userList = userList;
+        userListFull = new ArrayList<>(userList);
         this.listener = onItemClickListener;
     }
 
@@ -108,6 +112,38 @@ public class UserListAdapter extends RecyclerView.Adapter{
             }
         });
     }
+
+    @Override
+    public Filter getFilter() {
+        return userFilter;
+    }
+
+    private Filter userFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            List<User> filteredList = new ArrayList<>();
+            if(constraint == null || constraint.length() == 0){
+                filteredList.addAll(userListFull);
+            }else{
+                String filterPattern = constraint.toString().toLowerCase().trim();
+                for(User user : userListFull){
+                    if(user.getName().toLowerCase().contains(filterPattern)){
+                        filteredList.add(user);
+                    }
+                }
+            }
+            FilterResults results = new FilterResults();
+            results.values = filteredList;
+            return results;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            userList.clear();
+            userList.addAll((List) results.values);
+            notifyDataSetChanged();
+        }
+    };
 
     private class ListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

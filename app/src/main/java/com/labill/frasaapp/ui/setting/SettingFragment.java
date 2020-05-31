@@ -239,7 +239,7 @@ public class SettingFragment extends Fragment {
             Bitmap bmp = (Bitmap) data.getExtras().get("data");
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
 
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
             byte[] byteArray = stream.toByteArray();
 
             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0,
