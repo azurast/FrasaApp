@@ -106,7 +106,7 @@ public class Before_Publish_Fragment extends Fragment {
             container1.addView(imageView);
             imageView.getLayoutParams().width = width1;
             imageView.getLayoutParams().height = height1;
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
         }
 
         if(image == "") {
@@ -143,12 +143,12 @@ public class Before_Publish_Fragment extends Fragment {
                     }
                 });
 
-                DocumentReference stickerRef = db.collection("stickers").document();
-
                 for(int i=0; i<TotalStickers; i++)
                 {
+                    DocumentReference stickerRef = db.collection("stickers").document();
+
                     Map<String, Object> newSticker = new HashMap<>();
-                    newSticker.put("story", title2);
+                    newSticker.put("atitle", title2);
                     newSticker.put("sticker", stickers[i]);
                     newSticker.put("xPos", xPos[i]);
                     newSticker.put("yPos", yPos[i]);

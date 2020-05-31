@@ -1,7 +1,12 @@
 package com.labill.frasaapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +34,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
+
 import java.util.ArrayList;
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Optional;
 
@@ -191,16 +198,29 @@ public class StoriesListAdapter extends RecyclerView.Adapter implements Filterab
                         if (doc.getType() == DocumentChange.Type.ADDED){
 
                             idStory = doc.getDocument().getId();
-                            Log.d(postTitle.getText().toString(), idStory);
-                            StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
-                            Log.d("link", storyRef.toString());
 
-                            storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Picasso.get().load(uri).into(postImage);
-                                }
-                            });
+                            String img = doc.getDocument().get("photo").toString();;
+
+                            if(img == "") {
+
+                            }else{
+                                Bitmap pic = stringToBitmap(img);
+                                postImage.setImageBitmap(pic);
+//                                int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
+//                                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
+                                postImage.getLayoutParams().height = 400;
+                                postImage.getLayoutParams().width = 900;
+                                postImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            }
+//                            StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
+//                            Log.d("link", storyRef.toString());
+//
+//                            storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    Picasso.get().load(uri).into(postImage);
+//                                }
+//                            });
 
                         }
                         else
@@ -218,6 +238,11 @@ public class StoriesListAdapter extends RecyclerView.Adapter implements Filterab
         public void onClick(View v) {
             onItemClickListener.onItemClick(getAdapterPosition(), tempName);
         }
+    }
+
+    public final static Bitmap stringToBitmap(String in){
+        byte[] bytes = Base64.decode(in, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     public interface OnItemClickListener {

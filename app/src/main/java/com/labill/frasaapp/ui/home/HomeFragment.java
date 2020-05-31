@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
     private List<Stories> storiesList;
     private List<Stories> searchList;
     private Context mContext = this.getContext();
+    private String idAuthor;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,7 +70,6 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         //homeViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
         setHasOptionsMenu(true);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
@@ -169,11 +169,18 @@ public class HomeFragment extends Fragment implements StoriesListAdapter.OnItemC
         Intent intent = new Intent(getActivity(), ReadingActivity.class);
         // kurang pass photo
 //        Log.d(TAG, "name :"+storiesList.get(position).getName());
-        intent.putExtra("title", storiesList.get(position).getTitle());
+        intent.putExtra("title", title);
         intent.putExtra("name", name);
         intent.putExtra("content", storiesList.get(position).getContent());
         //intent.putExtra("photo", idStory);
 
         startActivity(intent);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle oldInstanceState)
+    {
+        super.onSaveInstanceState(oldInstanceState);
+        oldInstanceState.clear();
     }
 }
