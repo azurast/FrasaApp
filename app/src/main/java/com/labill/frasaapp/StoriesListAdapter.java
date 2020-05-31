@@ -1,14 +1,18 @@
 package com.labill.frasaapp;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.util.Base64;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,14 +20,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -31,23 +27,17 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.labill.frasaapp.R;
-import com.labill.frasaapp.Stories;
-import com.labill.frasaapp.ui.home.HomeFragment;
-import com.labill.frasaapp.ui.home.HomeViewModel;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
-import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class StoriesListAdapter extends RecyclerView.Adapter {
 
@@ -100,9 +90,9 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
             this.onItemClickListener = onItemClickListener;
             postImage = (ImageView) itemView.findViewById(R.id.post_image);
             profileImage = (CircleImageView) itemView.findViewById(R.id.profile_image);
-            postTitle = (TextView) itemView.findViewById(R.id.post_title);
+            postTitle = (TextView) itemView.findViewById(R.id.commenter);
             userName = (TextView) itemView.findViewById(R.id.user_name);
-            postPreview = (TextView) itemView.findViewById(R.id.post_preview);
+            postPreview = (TextView) itemView.findViewById(R.id.cmnt);
             itemView.setOnClickListener(this);
 
             firebaseFirestore = FirebaseFirestore.getInstance();
@@ -160,16 +150,29 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
                         if (doc.getType() == DocumentChange.Type.ADDED){
 
                             idStory = doc.getDocument().getId();
-                            Log.d(postTitle.getText().toString(), idStory);
-                            StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
-                            Log.d("link", storyRef.toString());
 
-                            storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Picasso.get().load(uri).into(postImage);
-                                }
-                            });
+                            String img = doc.getDocument().get("photo").toString();;
+
+                            if(img == "") {
+
+                            }else{
+                                Bitmap pic = stringToBitmap(img);
+                                postImage.setImageBitmap(pic);
+//                                int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
+//                                int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
+                                postImage.getLayoutParams().height = 400;
+                                postImage.getLayoutParams().width = 900;
+                                postImage.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            }
+//                            StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
+//                            Log.d("link", storyRef.toString());
+//
+//                            storyRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+//                                @Override
+//                                public void onSuccess(Uri uri) {
+//                                    Picasso.get().load(uri).into(postImage);
+//                                }
+//                            });
 
                         }
                         else
@@ -187,6 +190,11 @@ public class StoriesListAdapter extends RecyclerView.Adapter {
         public void onClick(View v) {
             onItemClickListener.onItemClick(getAdapterPosition(), tempName);
         }
+    }
+
+    public final static Bitmap stringToBitmap(String in){
+        byte[] bytes = Base64.decode(in, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     public interface OnItemClickListener {

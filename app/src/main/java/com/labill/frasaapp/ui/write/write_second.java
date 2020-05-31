@@ -129,10 +129,10 @@ public class write_second extends Fragment implements View.OnDragListener {
             Bitmap pic = stringToBitmap(image);
             cover.setImageBitmap(pic);
             int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
-            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 312, getResources().getDisplayMetrics());
+            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
             cover.getLayoutParams().height = height;
             cover.getLayoutParams().width = width;
-            cover.setScaleType(ImageView.ScaleType.FIT_XY);
+            cover.setScaleType(ImageView.ScaleType.CENTER_CROP);
         }
 
         prev.setOnClickListener(new View.OnClickListener() {

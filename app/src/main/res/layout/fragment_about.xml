@@ -28,8 +28,9 @@
             android:layout_gravity="bottom"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:layout_marginStart="16dp"
+            android:fontFamily="@font/average_sans"
             android:text="This app is created by:\nAaron Effendi\nAzura Sakan Taufik\nCyntia Fanny\nfor Mobile 1 Project"
-            android:textSize="20sp"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -40,6 +41,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:layout_marginTop="50dp"
+            android:fontFamily="@font/average"
             android:gravity="center"
             android:lineSpacingExtra="10dp"
             android:paddingLeft="30dp"

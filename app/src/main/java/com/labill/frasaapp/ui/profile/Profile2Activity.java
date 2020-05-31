@@ -150,4 +150,5 @@ public class Profile2Activity extends AppCompatActivity {
             }
         });
     }
+
 }

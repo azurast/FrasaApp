@@ -23,10 +23,11 @@
         android:id="@+id/user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/average"
         android:gravity="center"
+        android:onClick="openProfile"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="John Doe"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:onClick="openProfile"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
 </LinearLayout>

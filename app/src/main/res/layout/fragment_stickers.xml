@@ -2,18 +2,18 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:background="@color/white"
     android:id="@+id/frag"
-    android:layout_height="300dp">
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@color/inputTextBackground">
 
     <ScrollView
         android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:layout_weight="1"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
@@ -23,6 +23,18 @@
             android:backgroundTint="?attr/colorButtonNormal"
             android:orientation="vertical"
             android:outlineProvider="none">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="Press and hold a moment to add sticker"
+                android:textAlignment="center"
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:id="@+id/box2"

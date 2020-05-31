@@ -14,19 +14,21 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        <EditText
-            android:id="@+id/name"
-            android:layout_width="350dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="45dp"
-            android:background="@drawable/input_text"
-            android:ems="10"
-            android:hint="@string/prompt_name"
-            android:paddingLeft="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.491"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="45dp"
+                android:background="@drawable/input_text"
+                android:ems="10"
+                android:fontFamily="@font/average_sans"
+                android:hint="@string/prompt_name"
+                android:paddingLeft="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <EditText
                 android:id="@+id/password"
@@ -35,6 +37,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/input_text"
                 android:ems="10"
+                android:fontFamily="@font/average_sans"
                 android:hint="@string/prompt_password"
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
@@ -49,6 +52,7 @@
                 android:layout_marginTop="16dp"
                 android:background="@drawable/input_text"
                 android:ems="10"
+                android:fontFamily="@font/average_sans"
                 android:hint="Re-enter password"
                 android:inputType="textPassword"
                 android:paddingLeft="20dp"
@@ -87,6 +91,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:fontFamily="@font/average_sans"
                 android:text="Already have an account? Sign In "
                 android:textColor="@color/colorPrimary"
                 android:textStyle=""
@@ -95,18 +100,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/signup" />
 
             <EditText
-            android:id="@+id/email"
-            android:layout_width="350dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/input_text"
-            android:ems="10"
-            android:hint="@string/prompt_email"
-            android:inputType="textEmailAddress"
-            android:paddingLeft="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+                android:id="@+id/email"
+                android:layout_width="350dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/input_text"
+                android:ems="10"
+                android:fontFamily="@font/average_sans"
+                android:hint="@string/prompt_email"
+                android:inputType="textEmailAddress"
+                android:paddingLeft="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -119,6 +125,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/ic_signup" />
+
+            <TextView
+                android:id="@+id/getstarted_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="268dp"
+                android:layout_marginTop="68dp"
+                android:fontFamily="@font/average"
+                android:lineSpacingExtra="8sp"
+                android:text="Get \nStarted"
+                android:textColor="@color/colorPrimary"
+                android:textSize="36sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
