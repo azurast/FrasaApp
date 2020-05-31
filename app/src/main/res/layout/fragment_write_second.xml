@@ -8,15 +8,81 @@
     android:background="#FFFFFF"
     tools:context=".ui.write.WriteFragment">
 
+
+    <View
+        android:id="@+id/text_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:foregroundGravity="top|center_horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="221dp"
+                android:background="@drawable/basic"
+                android:scaleType="centerCrop"
+                android:textAppearance="@style/choose_layo" />
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="Title"
+                android:textAppearance="@style/choose_layo"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/my_write"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:textAppearance="@style/start_writi" />
+        </LinearLayout>
+    </ScrollView>
+
     <TextView
         android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
+        android:clickable="true"
         android:gravity="top"
         android:text="@string/next"
-        android:clickable="true"
         android:textAppearance="@style/next"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.903"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,27 +93,66 @@
         android:layout_width="wrap_content"
         android:layout_height="21dp"
         android:layout_marginTop="16dp"
+        android:background="@color/colorPrimary"
         android:clickable="true"
         android:gravity="top"
-        android:text="@string/preview"
+        android:text="Previous"
         android:textAppearance="@style/next"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.093"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/choose_layo"
-        android:layout_width="wrap_content"
-        android:layout_height="33dp"
-        android:layout_marginTop="76dp"
-        android:gravity="top"
-        android:text="Choose Layout"
-        android:textAppearance="@style/choose_layo"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.126"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:id="@+id/frag"
+            android:layout_width="match_parent"
+            android:layout_height="300dp" />
+
+        <LinearLayout
+            android:id="@+id/tab2"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#F9F9F9">
+
+            // Stickers
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/stickers"
+                android:textStyle="bold"
+                android:clickable="true"
+                android:textAppearance="@style/colors"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="STICKERS" />
+
+            // Frame color
+
+            <TextView
+                android:layout_weight="1"
+                android:clickable="true"
+                android:textAppearance="@style/colors"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:id="@+id/color"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="COLOR" />
+        </LinearLayout>
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
