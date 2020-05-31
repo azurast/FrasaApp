@@ -3,12 +3,10 @@ package com.labill.frasaapp.ui.reading_mode;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -18,7 +16,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,8 +23,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -37,7 +32,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.labill.frasaapp.R;
 import com.labill.frasaapp.ui.profile.SeeProfile;
-import com.squareup.picasso.Picasso;
 
 import javax.annotation.Nullable;
 
@@ -94,7 +88,7 @@ public class ReadingActivity extends AppCompatActivity {
         tvAuthor.setText(recvAuthor);
         tvContent.setText(recvContent);
 
-        Log.d("title",tvTitle.getText().toString());
+        fetchSticker(recvTitle);
 
         //Retrieve author's id
         Query loadAuthor = firebaseFirestore.collection("users").
@@ -108,6 +102,7 @@ public class ReadingActivity extends AppCompatActivity {
                     if (doc.getType() == DocumentChange.Type.ADDED){
 
                         idAuthor = doc.getDocument().getId();
+                        Log.d("author", idAuthor);
 
                     }
                     else
@@ -127,6 +122,7 @@ public class ReadingActivity extends AppCompatActivity {
         loadStory.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@javax.annotation.Nullable QuerySnapshot documentSnapshots, @javax.annotation.Nullable FirebaseFirestoreException e) {
+                Log.d("coba", "masuk");
                 for (DocumentChange doc : documentSnapshots.getDocumentChanges()){
 
                     if (doc.getType() == DocumentChange.Type.ADDED){
@@ -134,6 +130,22 @@ public class ReadingActivity extends AppCompatActivity {
                         idStory = doc.getDocument().getId();
                         Log.d("cekkkkk", idStory);
 
+                        String img = doc.getDocument().get("photo").toString();
+
+                        if(img == "") {
+
+                        }else{
+                            Bitmap pic = stringToBitmap(img);
+                            storyImg.setImageBitmap(pic);
+                            int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
+                            int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
+                            storyImg.getLayoutParams().height = height;
+                            storyImg.getLayoutParams().width = width;
+                            storyImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        }
+
+                        Integer color = valueOf(doc.getDocument().get("color").toString());
+                        colorLayout.setBackgroundColor(color);
 
 //                        StorageReference storyRef = references.child("stories/"+idStory+"/stories.jpg");
 //
@@ -153,33 +165,6 @@ public class ReadingActivity extends AppCompatActivity {
             }
         });
 
-        DocumentReference docRef = firebaseFirestore.collection("stories").document(idStory);
-
-        docRef.addSnapshotListener(this, new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                color = valueOf(documentSnapshot.getString("color"));
-                Log.d("colorBorder", color.toString());
-                photo = documentSnapshot.getString("photo");
-
-                if(photo == "") {
-
-                }else{
-                    Bitmap pic = stringToBitmap(photo);
-                    storyImg.setImageBitmap(pic);
-                    int height = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 221, getResources().getDisplayMetrics());
-                    int width = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 355, getResources().getDisplayMetrics());
-                    storyImg.getLayoutParams().height = height;
-                    storyImg.getLayoutParams().width = width;
-                    storyImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
-                }
-
-                if(color!=0)
-                {
-                    colorLayout.setBackgroundColor(color);
-                }
-            }
-        });
 
         databaseLike.addValueEventListener(new ValueEventListener() {
             @Override
@@ -334,6 +319,32 @@ public class ReadingActivity extends AppCompatActivity {
                 Intent intent = new Intent(ReadingActivity.this, CommentActivity.class);
                 intent.putExtra("id", idStory);
                 startActivity(intent);
+            }
+        });
+
+    }
+
+    public void fetchSticker (String recvTitle) {
+        //fetch sticker
+        com.google.firebase.firestore.Query loadSticker = firebaseFirestore.collection("stickers").
+                whereEqualTo("title", recvTitle);
+
+        loadSticker.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot documentSnapshots, @Nullable FirebaseFirestoreException e) {
+
+                for (DocumentChange doc : documentSnapshots.getDocumentChanges()) {
+                    Log.d("sticker", "sss");
+                    if (doc.getType() == DocumentChange.Type.ADDED) {
+
+                        String idSticker = doc.getDocument().getId();
+                        Log.d("sticker", idSticker);
+
+                    } else {
+                        Log.d("ini", "gagal");
+                    }
+                }
+
             }
         });
 

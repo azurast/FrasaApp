@@ -143,10 +143,10 @@ public class Before_Publish_Fragment extends Fragment {
                     }
                 });
 
-                DocumentReference stickerRef = db.collection("stickers").document();
-
                 for(int i=0; i<TotalStickers; i++)
                 {
+                    DocumentReference stickerRef = db.collection("stickers").document();
+
                     Map<String, Object> newSticker = new HashMap<>();
                     newSticker.put("story", title2);
                     newSticker.put("sticker", stickers[i]);
