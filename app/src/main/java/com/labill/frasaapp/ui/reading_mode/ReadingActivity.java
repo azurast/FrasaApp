@@ -212,6 +212,7 @@ public class ReadingActivity extends AppCompatActivity {
                             storyImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
                         }
 
+                        tvGenre.setText(doc.getDocument().get("genre").toString());
                         Integer color = valueOf(doc.getDocument().get("color").toString());
                         colorLayout.setBackgroundColor(color);
                     }
