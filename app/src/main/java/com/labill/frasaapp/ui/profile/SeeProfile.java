@@ -126,22 +126,24 @@ public class SeeProfile extends AppCompatActivity {
 
                 if(task.isSuccessful()){
                     QuerySnapshot querySnapshot = task.getResult();
-
                     if(querySnapshot != null){
                         Log.d(TAG, "followingcek : yes");
+                        Log.d(TAG, querySnapshot.toString());
+                        // ntah kenapa blm masuk kesini
                         for(QueryDocumentSnapshot doc : querySnapshot) {
                             Log.d(TAG,"cekdoc document"+doc.getId());
                             for (String idUser : idList) {
+                                Log.d(TAG,"cek equal "+doc.getId().equals(id));
                                 if (doc.getId().equals(id)) {
                                     buttFollow.setText("Following");
                                     buttFollow.setBackgroundColor(Color.rgb(191,102, 52));
                                     buttFollow.setTextColor(Color.rgb(255,255,255));
-                                    Log.d("followz","followed");
+                                    Log.d(TAG,"follow : followed");
                                 }else{
                                     buttFollow.setText("Follow");
                                     buttFollow.setBackgroundColor(Color.rgb(229,229,229));
                                     buttFollow.setTextColor(Color.rgb(191,102, 52));
-                                    Log.d("followz","follow");
+                                    Log.d(TAG,"follow : follow");
                                 }
 
                             }
@@ -149,7 +151,7 @@ public class SeeProfile extends AppCompatActivity {
                     }
                 } else {
                     buttFollow.setText("Follow");
-                    Log.d("followz","follow");
+                    Log.d(TAG,"task unsuccessfull");
                 }
             }
         });
