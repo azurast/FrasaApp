@@ -48,7 +48,7 @@ public class Before_Publish_Fragment extends Fragment {
     String[] stickers;
     Float[] xPos;
     Float[] yPos;
-    Button publish;
+    public TextView publish;
     private String id, idStory;
     private BeforePublishViewModel mViewModel;
 
@@ -124,7 +124,6 @@ public class Before_Publish_Fragment extends Fragment {
         publish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"Yay! Your Story\nHas Been Published!", Toast.LENGTH_SHORT).show();
                 //buat save ke firebase
                 id = mAuth.getCurrentUser().getUid();
                 DocumentReference documentReference = db.collection("stories").document();
@@ -172,6 +171,8 @@ public class Before_Publish_Fragment extends Fragment {
                 fragmentTransaction.replace(R.id.bpublish, fragment);
                 fragmentTransaction.addToBackStack(null);
                 fragmentTransaction.commit();
+                Toast.makeText(getActivity(),"Yay! Your Story\nHas Been Published!", Toast.LENGTH_SHORT).show();
+
             }
         });
         return view;
