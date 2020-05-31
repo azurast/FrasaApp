@@ -17,6 +17,11 @@ public class Comments {
         this.comment =comment;
     }
 
+    public Comments(String idAuthor, String comment) {
+        this.idAuthor = idAuthor;
+        this.comment =comment;
+    }
+
     public String getIdAuthor() {
         return idAuthor;
     }
@@ -27,5 +32,15 @@ public class Comments {
 
     public String getComment() {return comment;}
 
-    public void setComment(String comment) {this.comment = comment;}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public void setIdStory(String idStory) {
+        this.idStory = idStory;
+    }
+
+    public void setIdAuthor(String idAuthor) {
+        this.idAuthor = idAuthor;
+    }
 }

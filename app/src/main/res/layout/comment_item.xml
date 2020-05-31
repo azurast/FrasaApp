@@ -24,15 +24,18 @@
                 android:id="@+id/commenter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Judul"
+                android:layout_marginTop="7dp"
+                android:fontFamily="@font/average"
+                android:text="John Doe"
                 android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/cmnt"
+                android:id="@+id/commentContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/average_sans"
                 android:text="Summary text" />
 
         </LinearLayout>
